@@ -1,0 +1,7 @@
+2MK2_1 | Chain A | Phosphatidylinositol 3,4,5-trisphosphate 5-phosphatase 2 | Homo sapiens (9606)
+sequence: 
+MGHHHHHHSHMSWYHRDLSRAAAEELLARAGRDGSFLVRDSESVAGAFALCVLYQKHVHTYRILPDGEDFLAVQTSQGVPVRRFQTLGELIGLYAQPNQGLVCALLLPV
+jumlah tiap Asam amino pada rcsb_pdb_2MK2.fasta: 
+{"Alanine": 11, "Cysteine": 2, "Aspartic_acid": 5, "Glutamic_acid": 5, "Phenylalanine": 4, "Glycine": 9, "Histidine": 10, "Isoleucine": 2, "Lysine": 1, "Leucine": 15, "Methionine": 2, "Asparagine": 1, "Proline": 4, "Glutamine": 6, "Arginine": 8, "Serine": 7, "Threonine": 3, "Valine": 9, "Tryptophan": 1, "Tyrosine": 4}
+distribusi tiap Asam amino pada rcsb_pdb_2MK2.fasta: 
+{"Alanine": "10.09%", "Cysteine": "1.83%", "Aspartic_acid": "4.59%", "Glutamic_acid": "4.59%", "Phenylalanine": "3.67%", "Glycine": "8.26%", "Histidine": "9.17%", "Isoleucine": "1.83%", "Lysine": "0.92%", "Leucine": "13.76%", "Methionine": "1.83%", "Asparagine": "0.92%", "Proline": "3.67%", "Glutamine": "5.50%", "Arginine": "7.34%", "Serine": "6.42%", "Threonine": "2.75%", "Valine": "8.26%", "Tryptophan": "0.92%", "Tyrosine": "3.67%"}

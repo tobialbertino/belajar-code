@@ -1,0 +1,1 @@
+gcc -o namaFile sinkron.c -lpthread

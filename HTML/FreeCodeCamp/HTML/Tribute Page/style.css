@@ -1,0 +1,68 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#main {
+  width: 80%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f2faff;
+  border-radius: 3px;
+}
+
+header {
+  background-color: #f2faff;
+  border-radius: 5px;
+}
+
+h1,
+h2 {
+  color: #3db5ff;
+  text-align: center;
+}
+
+#img-div {
+  background-color: #afe0ff;
+  border-radius: 2px;
+  padding: 20px;
+}
+
+#image {
+  display: block;
+  border-radius: 7px;
+  max-width: 80%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#img-caption {
+  text-align: center;
+}
+
+#tribute-info {
+  padding: 20px;
+}
+
+p {
+  font-size: 1.2em;
+  text-align: left;
+}
+
+ul {
+  text-align: left;
+  font-size: 1.1em;
+}
+
+footer {
+  background-color: #afe0ff;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+footer p {
+  text-align: center;
+}

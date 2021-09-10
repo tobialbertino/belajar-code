@@ -1,0 +1,18 @@
+1.  Judul :  Nursery
+2.  Sumber:  Vladislav Rajkovic et al. (disunting)
+3.  Deskripsi:
+    Dataset nursery ini merupakan suntingan dari Nursery database yang berisi
+    keputusan rekomendasi pada aplikasi pendaftaran siswa/i taman kanak-kanak.
+    Keputusan dibuat berdasarkan beberapa aspek pada latar belakang keluarga.
+4.  Atribut:
+    a.  parents   :  Pekerjaan orang tua        {usual, pretentious, great pret}
+    b.  has_nurs  :  Merawat anak               {proper, less_proper, improper, critical, very_crit}
+    c.  form      :  Bentuk keluarga            {complete, completed, incomplete, foster}
+    d.  children  :  Banyak anak yang dimiliki  {1, 2, 3, more}
+    e.  housing   :  Kondisi rumah              {convenient, less_conv, critical}
+    f.  finance   :  Kemampuan finansial        {convenient, inconv}
+    g.  social    :  Kondisi sosial             {non-prob, slightly_prob, problematic}
+    h.  health    :  Kondisi kesehatan          {recommend, priority, not_recom8}
+    i.  class     :  Keputusan rekomendasi      {not_recom, very_recom, priority, spec_prior}
+
+    

@@ -1,0 +1,7 @@
+3W6A_1 | Chain A | Lysozyme C | Gallus gallus (9031)
+sequence: 
+KVFGRCELAAAMKRHGLDNYRGYSLGNWVCAAKFESNFNTQATNRNTDGSTDYGILQINSRWWCNDGRTPGSRNLCNIPCSALLSSDITASVNCAKKIVSDGNGMNAWVAWRNRCKGTDVQAWIRGCRL
+jumlah tiap Asam amino pada rcsb_pdb_3W6A.fasta: 
+{"Alanine": 12, "Cysteine": 8, "Aspartic_acid": 7, "Glutamic_acid": 2, "Phenylalanine": 3, "Glycine": 12, "Histidine": 1, "Isoleucine": 6, "Lysine": 6, "Leucine": 8, "Methionine": 2, "Asparagine": 14, "Proline": 2, "Glutamine": 3, "Arginine": 11, "Serine": 10, "Threonine": 7, "Valine": 6, "Tryptophan": 6, "Tyrosine": 3}
+distribusi tiap Asam amino pada rcsb_pdb_3W6A.fasta: 
+{"Alanine": "9.30%", "Cysteine": "6.20%", "Aspartic_acid": "5.43%", "Glutamic_acid": "1.55%", "Phenylalanine": "2.33%", "Glycine": "9.30%", "Histidine": "0.78%", "Isoleucine": "4.65%", "Lysine": "4.65%", "Leucine": "6.20%", "Methionine": "1.55%", "Asparagine": "10.85%", "Proline": "1.55%", "Glutamine": "2.33%", "Arginine": "8.53%", "Serine": "7.75%", "Threonine": "5.43%", "Valine": "4.65%", "Tryptophan": "4.65%", "Tyrosine": "2.33%"}

@@ -1,0 +1,213 @@
+:root {
+  --slack-background: #f7f8f7;
+  --slack-blue: #0576b9;
+  --slack-border: #e6e6e6;
+  --slack-code-border: #e3e2e3;
+  --slack-code-block-text: #000080;
+  --slack-code-text: #d72b3f;
+  --slack-green: #107940;
+  --slack-hover-blue: #e5f2fc;
+  --slack-hover-border: #d5ecf9;
+  --slack-orange: #fc7d0a;
+  --slack-pink: #d9005f;
+  --slack-text-black: #22262c;
+  --slack-text-grey: #5e5f61;
+  --white: #ffffff;
+}
+
+body {
+  background-color: var(--slack-background);
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  line-height: 1.75em;
+}
+
+header {
+  display: block;
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+#header {
+  background-color: var(--slack-background);
+  height: 100%;
+  left: 0px;
+  padding: 0px 10px 0px 30px;
+  position: fixed;
+  top: 0px;
+  width: 300px;
+}
+
+#title {
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1.5em;
+  margin: 10px 0px;
+}
+
+h2,
+h3,
+h4 {
+  margin: 0px;
+  padding: 10px 0px 10px 0px;
+}
+
+p {
+  margin: 0px 0px 10px 0px;
+}
+
+a,
+a:visited {
+  color: var(--slack-blue);
+  text-decoration: none;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0px;
+}
+
+nav li {
+  border: 1px solid transparent;
+  margin: 2px 0px;
+  padding: 3px 5px;
+}
+
+nav li:hover {
+  cursor: pointer;
+  background-color: var(--slack-hover-blue);
+  border: 1px solid var(--slack-hover-border);
+  border-radius: 5px;
+}
+
+code {
+  background-color: var(--slack-background);
+  border: 1px solid var(--slack-code-border);
+  border-radius: 3px;
+  color: var(--slack-code-text);
+  font-family: "Monaco", monospace;
+  font-size: 0.75em;
+  font-weight: lighter;
+  padding: 3px 3px;
+  word-break: break-word;
+}
+
+footer {
+  position: relative;
+  z-index: 2;
+}
+
+.border {
+  border: 1px solid red;
+}
+
+.text-black {
+  color: var(--slack-text-black);
+}
+
+.text-blue {
+  color: var(--slack-blue);
+}
+
+.text-red {
+  color: var(--slack-code-text);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.nav-link {
+  color: var(--slack-text-black) !important;
+}
+
+.main-section ul {
+  padding-left: 30px;
+}
+
+.code-block {
+  background-color: var(--slack-background);
+  color: var(--slack-code-block-text);
+  display: block;
+  line-height: 2em;
+  margin: 0px 0px 15px 0px;
+  padding: 10px;
+}
+
+.code-indent {
+  padding-left: 20px;
+}
+
+.warning {
+  border: 1px solid var(--slack-border);
+  border-left: 5px solid var(--slack-code-text);
+  border-radius: 5px;
+  display: flex;
+  margin-bottom: 10px;
+  padding: 10px 20px 0px 20px;
+}
+
+.warning-icon {
+  padding: 0px 20px 0px 0px;
+}
+
+.ul-2-col {
+  column-count: 2;
+  list-style: none;
+}
+
+#title {
+  text-align: center;
+}
+
+#main-doc {
+  background-color: var(--white);
+  border: 1px solid var(--slack-border);
+  border-radius: 5px;
+  margin: 10px 20px 20px 335px;
+  padding: 20px 20px 10px 20px;
+  /* position: absolute; */
+}
+
+@media (max-width: 830px) {
+  .ul-2-col {
+    column-count: 1;
+  }
+}
+
+@media (max-width: 860px) {
+  #header {
+    height: auto;
+    padding: 0px;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+  }
+
+  #title {
+    font-size: 1.5em;
+    margin: 10px;
+    padding: 0px;
+  }
+
+  ul {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  #main-doc {
+    margin: 260px 0px 0px 0px;
+    position: relative;
+  }
+}
+
+@media (max-width: 347px) {
+  #main-doc {
+    margin: 290px 0px 0px 0px;
+    position: relative;
+  }
+}

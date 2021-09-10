@@ -1,0 +1,23 @@
+{
+	"version": "1.0.0",
+	"author": "TobiAlbertino",
+	"description": "A project for FCC Backend-dev",
+	"name": "fcc-learn-npm-package-json",
+	"dependencies": {
+		"express": "^4.14.0",
+		"moment": "^2.10.2"
+	},
+	"keywords": [
+		"freecodecamp",
+		"learn"
+	],
+	"license": "MIT",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://idontknow/todo.git"
+	}
+}

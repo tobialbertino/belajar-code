@@ -1,0 +1,12 @@
+@relation soal5
+
+@attribute data numeric
+@attribute atribut1 numeric
+@attribute atribut2 numeric
+
+@data
+1,2,6
+2,4,3
+3,7,5
+4,3,2
+5,6,6

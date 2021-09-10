@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical page</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section id="header">
+        <nav id="navbar">
+            <header id="title">Slack Web API Documentation</header>
+            <ul>
+                <li><a href="#basics" class="nav-link">Basics</a></li>
+                <li><a href="#evaluating_responses" class="nav-link">Evaluating responses</a></li>
+                <li><a href="#authentication" class="nav-link">Authentication</a></li>
+                <li><a href="#open_api_specification" class="nav-link">Open API specification</a></li>
+                <li><a href="#methods" class="nav-link">Methods</a></li>
+            </ul>
+        </nav>
+    </section>
+    <main id="main-doc">
+        <section class="main-section" id="basics">
+            <header>Basics</header>
+            <p>The Web API is a collection of <a href="https://api.slack.com/methods" target="_blank">HTTP RPC-style methods</a>, all with URLs in the form <code>https://slack.com/api/METHOD_FAMILY.method</code>.</p>
+            <p>While it's not a REST API, those familiar with REST should be at home with its foundations in HTTP.</p>
+            <p>Use HTTPS and SSL when calling all methods.</p>
+            <p>Each method has a series of arguments informing the execution of your intentions.</p>
+            <p>Pass arguments as:</p>
+            <ul>
+                <li>GET querystring parameters</li>
+                <li>POST parameters presented as <code>application/x-www-form-urlencoded</code></li>
+                <li>or a mix of both GET and POST parameters</li>
+                <li><a href="https://api.slack.com/web#methods_supporting_json" target="_blank">Some write methods</a> allow arguments <code>application/json</code> attributes.</li>
+                <li>[<code>files.upload</code>] expects <code>multipart/form-data</code>, which is a fancy way of asking you to send most parameters as <code>application/x-www-form-urlencoded</code> key/value pairs but send files in their native content type.</li>
+            </ul>
+            <p>Some methods, like <code>chat.postMessage</code> and <code>dialog.open</code> feature arguments that accept an associative JSON array. These methods can be difficult to properly construct when using a <code>application/x-www-form-urlencoded</code> Content-type, and we strongly recommend using <a href="https://api.slack.com/web#posting_json" target="_blank">JSON-encoded bodies</a> instead.</p>
+            <h3>POST bodies</h3>
+            <p>When sending a HTTP POST, you may present your arguments as either standard POST parameters or use JSON instead.</p>
+            <h4>URL-encoded bodies</h4>
+            <p>When sending URL-encoded data, set your HTTP <code>Content-type</code> header to <code>application/x-www-form-urlencoded</code> and present your key/value pairs according to <a href="https://tools.ietf.org/html/rfc3986" target="_blank">RFC-3986</a>.</p>
+            <p>For example, a POST request to <code>conversations.create</code> might look something like this:</p>
+            <code class="code-block">
+                POST /api/conversations.create
+                Content-type: <span class="text-black">application/x-www-form-urlencoded</span>
+                token=xoxa-xxxxxxxxx-xxxx&name=something-urgent
+            </code>
+        </section>
+        <section class="main-section" id="evaluating_responses">
+            <header>Evaluating responses</header>
+            <p>All Web API responses contain a JSON object, which will always contain a top-level boolean property <code>ok</code>, indicating success or failure.</p>
+            <p>For failure results, the <code>error</code> property will contain a short machine-readable error code. In the case of problematic calls that could still be completed successfully, <code>ok</code> will be <code>true</code> and the <code>warning</code> property will contain a short machine-readable warning code (or comma-separated list of them, in the case of multiple warnings).</p>
+            <code class="code-block">
+                <span class="text-black">{<br>
+                    <span class="code-indent"></span>"ok": <span class="text-blue">true</span>,<br>
+                    <span class="code-indent">"stuff": <span class="text-red">"This is good"</span><br>
+                }</span>
+            </code>
+            <code class="code-block">
+                <span class="text-black">{<br>
+                    <span class="code-indent">"ok": <span class="text-blue">false</span>,<br>
+                    <span class="code-indent">"error": <span class="text-red">"something_bad"</span><br>
+                }</span>
+            </code>
+            <code class="code-block">
+                <span class="text-black">{<br>
+                    <span class="code-indent">"ok": <span class="text-blue">true</span>,<br>
+                    <span class="code-indent">"warning": <span class="text-red">"something_problematic"</span><br>
+                    <span class="code-indent">"stuff": <span class="text-red">"Your requested information"</span><br>
+                }</span>
+            </code>
+            <p>Other properties are defined in the documentation for each relevant method. There's a lot of "stuff" to unpack, including <a href="https://api.slack.com/types" target="_blank">these types</a> and other method or domain-specific curiosities.</p>
+        </section>
+        <section class="main-section" id="authentication">
+            <header>Authentication</header>
+            <p>Authenticate your Web API requests by providing a <a href="https://api.slack.com/docs/token-types" target="_blank">bearer token</a>, which identifies a single user, bot user, or workspace-application relationship.</p>
+            <p><a href="https://api.slack.com/apps" target="_blank">Register your application</a> with Slack to obtain credentials for use with our <a href="https://api.slack.com/docs/oauth" target="_blank">OAuth 2.0</a> implementation, which allows you to negotiate tokens on behalf of users and workspaces.</p>
+            <p>We prefer tokens to be sent in the <code>Authorization</code> HTTP header of your outbound requests. However, you may also pass tokens in all Web API calls as a parameter called <code>token</code>.</p>
+            <div class="warning">
+                <div class="warning-icon">
+                    <i class="fas fa-exclamation-triangle text-red"></i>
+                </div>
+                <div>
+                    <p>Treat tokens with care. Never share tokens with other users or applications. Do not publish tokens in public code repositories. <a href="https://api.slack.com/docs/oauth-safety" target="_blank">Review token safety tips</a>.</p>
+                </div>
+            </div>
+        </section>
+        <section class="main-section" id="open_api_specification">
+            <header>Open API specification</header>
+            <p>One way to understand all the magic behind the methods is to investigate our <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md" target="_blank">OpenAPI 2.0</a> specification, describing the requests and responses you'll find throughout our Web API.</p>
+            <ul>
+                <li><a href="https://api.slack.com/specs/openapi/v2/slack_web.json" target="_blank">Download the spec</a> from its canonical location on api.slack.com</li>
+                <li><a href="https://github.com/slackapi/slack-api-specs" target="_blank">Brose the spec's history</a> on github</li>
+            </ul>
+        </section>
+        <section class="main-section" id="methods">
+            <header>Methods</header>
+            <p>With over 100 methods, surely there's one right for you. Here is a list of the different method families available in our Web API:</p>
+            <ul class="ul-2-col">
+                <li>api</li>
+                <li>apps.permissions</li>
+                <li>apps.permissions.resources</li>
+                <li>apps.permissions.scopes</li>
+                <li>apps.permissions.users</li>
+                <li>apps</li>
+                <li>auth</li>
+                <li>bots</li>
+                <li>channels</li>
+                <li>chat</li>
+                <li>conversations</li>
+                <li>dialog</li>
+                <li>dnd</li>
+                <li>emoji</li>
+                <li>files.comments</li>
+                <li>files</li>
+                <li>groups</li>
+                <li>im</li>
+                <li>migration</li>
+                <li>mpim</li>
+                <li>oauth</li>
+                <li>pins</li>
+                <li>reactions</li>
+                <li>reminders</li>
+                <li>rtm</li>
+                <li>search</li>
+                <li>stars</li>
+                <li>team</li>
+                <li>team.profile</li>
+                <li>usergroups</li>
+                <li>usergroups.users</li>
+                <li>users</li>
+                <li>users.profile</li>
+            </ul>
+        </section>
+        <section class="text-center">
+            <p style="margin-top: 10px;">Information taken from <a href="https://api.slack.com/web" target="_blank">Slack API website</a>.</p>
+        </section>
+    </main>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+</html>
+
+<!-- ----------------------------------------------------------------- -->

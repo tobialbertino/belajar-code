@@ -1,0 +1,13 @@
+Nama : Muhamad Khoiru Tobi Albertino
+NIM  : G64180065
+
+objek menggunakan kumpulan GL_POLYGON dan
+kumpulan GL_TRIANGLE_FAN hingga menyerupai lingkaran dengan menggunakan persamaan lingkaran
+Transformasi yg digunakan =
+- Tranlasi: untuk mengcopy paste beberapa objek 
+- Scale : untuk membuat visual Matahari membesar/mengecil
+- Rotasi : sebagai pemanis gerakan matahari :)
+
+interaksi:
+klik mouse kiri : background 1
+klik mouse kanan : background 2

@@ -1,0 +1,10 @@
+Nama : Muhamad Khoiru Tobi Albertino
+NIM  : G64180065
+
+objek menggunakan kumpulan GL_POLYGON dan
+kumpulan GL_TRIANGLE_FAN hingga menyerupai lingkaran dengan menggunakan persamaan lingkaran
+Transformasi yg digunakan = translasi, rotasi dengan pusat tertentu, dan skala dengan pusat tertentu
+
+interaksi:
+klik mouse kiri : background 1
+klik mouse kanan : background 2
