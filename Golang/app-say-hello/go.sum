@@ -1,0 +1,6 @@
+github.com/tobialbertino/go-say-hello v1.0.0 h1:yJfvL8v8ksblRsNH59ST8WlMnO3nDd5n8wzBAQQ1bsE=
+github.com/tobialbertino/go-say-hello v1.0.0/go.mod h1:2GHl38UiYtlHfFqpwQQc3TXRc4FN2CgPYqYfpQPz3i4=
+github.com/tobialbertino/go-say-hello v1.5.0 h1:yEvh3gLrqcZ9YVB52eqlCtT+4KMCxxGqaITUV+SHqB8=
+github.com/tobialbertino/go-say-hello v1.5.0/go.mod h1:2GHl38UiYtlHfFqpwQQc3TXRc4FN2CgPYqYfpQPz3i4=
+github.com/tobialbertino/go-say-hello/v2 v2.0.0 h1:ikrfkZefCSpjSDq0d9sk97DaMB87BuV06YtuEmBQGlE=
+github.com/tobialbertino/go-say-hello/v2 v2.0.0/go.mod h1:FSHs9e6tbeGOURZa+bknncB1EZ2hzoXH+rs9+SqOPVE=

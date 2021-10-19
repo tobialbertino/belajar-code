@@ -6,7 +6,7 @@ func logging() {
 	fmt.Println("selesai memanggil function")
 }
 
-func runApp(value int) {
+func runApps(value int) {
 	defer logging()
 	fmt.Println("Menjalanjan App...")
 	result := 10 / value
@@ -14,5 +14,5 @@ func runApp(value int) {
 }
 
 func main() {
-	runApp(0)
+	runApps(0)
 }
