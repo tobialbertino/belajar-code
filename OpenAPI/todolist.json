@@ -1,0 +1,36 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "TodoList RESTful API",
+    "version": "1.0",
+    "description": "OpenAPI for TodoList RESTful API",
+    "termsOfService": "https://github.com/tobialbertino",
+    "contact": {
+      "name": "Tobi Albertino",
+      "email": "muhamad_tobiaja232@apps.ipb.ac.id",
+      "url": "https://github.com/tobialbertino"
+    },
+    "license": {
+      "name": "APACHE 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "description": "TodoList RESTful API server",
+      "url": "https://{enviroment}.test.com/api/v1",
+      "variables": {
+        "enviroment": {
+          "description": "Server Enviroment",
+          "default": "dev",
+          "enum": [
+            "dev",
+            "qa",
+            "prod"
+          ]
+        }
+      }
+    }
+  ],
+  "paths": {}
+}
