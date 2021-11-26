@@ -1,0 +1,329 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "ToDoList API",
+    "description": "Dokumentasi API ToDoList untuk kelas ICP",
+    "contact": {
+      "name": "Jerry Young",
+      "email": "jerry@alterra.id"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.server.test/{version}",
+      "variables": {
+        "version": {
+          "default": "v1",
+          "enum": [
+            "v1",
+            "v2"
+          ]
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "ToDo",
+      "description": "List of ToDoList"
+    },
+    {
+      "name": "Checkpoint"
+    }
+  ],
+  "paths": {
+    "/todo": {
+      "get": {
+        "summary": "Dapatkan seluruh data aktivitas",
+        "tags": [
+          "ToDo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "kegiatan": {
+                            "type": "string"
+                          },
+                          "kapan": {
+                            "type": "string",
+                            "format": "date"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": 1,
+                          "kegiatan": "main futsal",
+                          "kapan": "2021-11-30T00:00:00.000Z"
+                        },
+                        {
+                          "id": 2,
+                          "kegiatan": "kondangan mantan",
+                          "kapan": "2021-12-01T00:00:00.000Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Tambah data aktivitas",
+        "tags": [
+          "ToDo"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Menambah kegiatan baru dengan input sesuai parameter",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "kegiatan": {
+                    "type": "string",
+                    "example": "main futsal"
+                  },
+                  "kapan": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Berhasil menambahkan aktivitas"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "kegiatan": {
+                          "type": "string",
+                          "example": "main futsal"
+                        },
+                        "kapan": {
+                          "type": "string",
+                          "format": "date",
+                          "example": 
+                            "2021-11-30T00:00:00.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/todo/{id}": {
+      "put": {
+        "summary": "Ubah aktivitas berdasarkan ID",
+        "tags": [
+          "ToDo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Aktivitas hasil generate dari sistem",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/ToDoListInput"
+              },
+              "example": {
+                "kegiatan": "main band",
+                "kapan": "2021-11-28"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/SuccessSingleResponse"
+                },
+                "example": {
+                  "code": 1,
+                  "success": true,
+                  "message": "Berhasil ubah aktivitas",
+                  "data": {
+                    "kegiatan": "main band",
+                    "kapan": "2021-11-28"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ToDo"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/todoID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessSingleResponse"
+                },
+                "example": {
+                  "code": 200,
+                  "success": true,
+                  "message": "Berhasil hapus data",
+                  "data": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "todoID": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "schemas": {
+      "ToDoListInput": {
+        "type": "object",
+        "properties": {
+          "kegiatan": {
+            "type": "string"
+          },
+          "kapan": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "SuccessSingleResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ToDoListInput"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Kesalahan dari client",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Terjadi kesalahan pada input"
+                },
+                "data": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
