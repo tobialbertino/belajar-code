@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="147f5cbf-782d-402d-8529-0ec4500dd068" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dasar.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Number.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Array.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Range.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Variable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dasar/META-INF/dasar.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dasar/META-INF/dasar.kotlin_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dasar/NumberKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dasar/NumberKt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tempCodeRunnerFile.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -34,7 +34,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="28KQP7irMbpFX1yzkbecwU5LaJg" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -48,16 +48,24 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\TOBI\Documents\Github-belajar-code\belajar-code\Kotlin\dasar\src\main\kotlin" />
+      <recent name="C:\Users\TOBI\Documents\Github-belajar-code\belajar-code\Kotlin\dasar\src\main" />
       <recent name="C:\Users\TOBI\Documents\Github-belajar-code\belajar-code\Kotlin\dasar\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.NumberKt">
+  <component name="RunManager" selected="Kotlin.RangeKt">
+    <configuration name="ArrayKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ArrayKt" />
+      <module name="dasar" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main.kt" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="dasar" />
@@ -69,16 +77,37 @@
     <configuration name="NumberKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="NumberKt" />
       <module name="dasar" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RangeKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="RangeKt" />
+      <module name="dasar" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VariableKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="VariableKt" />
+      <module name="dasar" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
       <item itemvalue="Kotlin.Main.kt" />
+      <item itemvalue="Kotlin.ArrayKt" />
+      <item itemvalue="Kotlin.RangeKt" />
+      <item itemvalue="Kotlin.VariableKt" />
       <item itemvalue="Kotlin.NumberKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.RangeKt" />
+        <item itemvalue="Kotlin.ArrayKt" />
+        <item itemvalue="Kotlin.VariableKt" />
         <item itemvalue="Kotlin.NumberKt" />
       </list>
     </recent_temporary>
