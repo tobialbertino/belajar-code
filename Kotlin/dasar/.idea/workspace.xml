@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="147f5cbf-782d-402d-8529-0ec4500dd068" name="Changes" comment="test idea">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/AnonymousFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Closure.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ExtensionFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FunctionDefaultParameter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FunctionInfixNotation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FunctionNamedArgument.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FunctionParameter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FunctionReturnType.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FunctionScope.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FunctionVarargsParameter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/HigherOrderFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/InlineFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Komentar.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Label.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/LambdaExpression.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/MainParameter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Package.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/RecursiveFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ReturnIfWhen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/SingleExpressionFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/TailRecursiveFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/UnitReturningFunction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/company/belajar/util/stringUtil.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="147f5cbf-782d-402d-8529-0ec4500dd068" name="Changes" comment="add kotlin code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651047896067</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add kotlin code">
+      <created>1651907536076</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1651907536076</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,7 +151,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test idea" />
-    <option name="LAST_COMMIT_MESSAGE" value="test idea" />
+    <MESSAGE value="add kotlin code" />
+    <option name="LAST_COMMIT_MESSAGE" value="add kotlin code" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
