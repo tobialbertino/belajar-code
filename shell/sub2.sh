@@ -20,4 +20,9 @@ cat /etc/passwd > daftar-user.txt
 
 sudo journalctl -u ssh.service > ssh-log.txt
 
+# alternative wsl
+sudo service rsyslog start
+service rsyslog start
+cat /var/log/auth.log > ssh-log.txt
+
 sudo journalctl -b -u ssh -o json-pretty > ssh-log.json
