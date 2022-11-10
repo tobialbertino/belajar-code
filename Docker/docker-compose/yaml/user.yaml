@@ -1,0 +1,14 @@
+firstName: M
+middleName: Khoiru
+lastName: Tobi
+hobbies:
+  - coding
+  - reading
+  - gaming
+address:
+  - country: Indonesia
+wallet:
+  - type: cash
+    amount: 1000
+  - type: debit
+    amount: 1000

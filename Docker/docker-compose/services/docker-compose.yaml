@@ -1,0 +1,13 @@
+version : "3.8"
+
+services:
+  # this is example nginx 
+  nginx-example:
+    image: nginx:latest
+    container_name: nginx-example
+  
+  # this is example nginx 
+  mongodb-example:
+    image: mongo:latest
+    container_name: mongodb-example
+

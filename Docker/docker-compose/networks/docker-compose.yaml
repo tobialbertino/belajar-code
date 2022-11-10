@@ -1,0 +1,20 @@
+version: "3.8"
+
+networks:
+  network_example:
+    name: network_example
+    driver: bridge
+
+services:
+  # this is example comment
+  mongodb-example:
+    image: mongo:latest
+    container_name: mongodb-example
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test
+      - MONGO_INITDB_DATABASE=admin
+    networks:
+      - network_example
