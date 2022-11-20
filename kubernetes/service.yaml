@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: webserver
+  name: webserver
+spec:
+  ports:
+  - protocol: TCP
+    targetPort: 80 ### port your app listens on
+    port: 80 ### port on which you want to expose it within your cluster
+  selector:
+    app: webserver
+  type: NodePort
