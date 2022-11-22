@@ -1,6 +1,21 @@
 apiVersion: v1
 kind: Namespace
+# create namespace name=webserver-ns
 metadata:
   name: webserver-ns
   labels:
     app: webserver
+
+# kubectl get namespace
+
+# kubens
+# kubectl ... -n webserver-ns
+
+# kubectl apply -f pod.yaml -n webserver-ns && kubectl apply -f service.yaml -n webserver-ns OR
+# kubectl apply -f pod.yaml && kubectl apply -f service.yaml
+
+# kubectl describe pod mypod -n webserver-ns
+# kubectl describe service webserver -n webserver-ns
+
+# kubectl api-resources --namespaced=true
+# kubectl api-resources --namespaced=false

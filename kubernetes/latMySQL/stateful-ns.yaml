@@ -4,3 +4,5 @@ metadata:
   name: stateful-ns
   labels:
     app: mysql
+
+# kubectl apply -f stateful-ns.yaml

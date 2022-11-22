@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: support-tier
+  namespace: deployments
   labels:
     app: microservices
     tier: support
@@ -19,6 +20,10 @@ spec:
         containers:
         - name: counter
           image: lrakai/microservices:counter-v1
+          resources:
+            limits:
+              cpu: "1000m"     # 500m = 500 milliCPUs (1/2 CPU)
+              memory: "1000Mi" # 128Mi = 128 mebibytes
           env:
             - name: API_URL
               # DNS for service discovery
@@ -26,10 +31,19 @@ spec:
               #   IP address: <service_name>.<service_namespace>
               #   Port: needs to be extracted from SRV DNS record
               value: http://app-tier.deployments:8080
- 
- 
+
+
         - name: poller
           image: lrakai/microservices:poller-v1
+          resources:
+            limits:
+              cpu: "1000m"     # 500m = 500 milliCPUs (1/2 CPU)
+              memory: "1000Mi" # 128Mi = 128 mebibytes
           env:
             - name: API_URL
               value: http://app-tier:$(APP_TIER_SERVICE_PORT)
+
+# kubectl apply -f data-tier.yaml -f app-tier.yaml -f support-tier.yaml -n deployments
+# kubectl get deployment -n deployments
+# kubectl get pod -n deployments
+# kubectl describe service app-tier -n deployments

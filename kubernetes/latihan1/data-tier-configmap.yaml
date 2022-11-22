@@ -6,4 +6,5 @@ data:
   config: |
     tcp-keepalive 240
     maxmemory 1mb
-  
+
+# kubectl apply -f data-tier-configmap.yaml -f data-tier.yaml -n deployments

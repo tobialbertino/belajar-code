@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app-tier
+  namespace: deployments
   labels:
     app: microservices
 spec:
@@ -10,10 +11,12 @@ spec:
   selector:
     tier: app
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-tier
+  namespace: deployments
   labels:
     app: microservices
     tier: app
@@ -33,9 +36,12 @@ spec:
         image: lrakai/microservices:server-v1
         ports:
           - containerPort: 8080
-        # resources:
-        #   requests:
-        #     cpu: 20m
+        resources:
+          # requests:
+          #   cpu: 20m
+          limits:
+            cpu: "1000m"     # 500m = 500 milliCPUs (1/2 CPU)
+            memory: "1000Mi" # 128Mi = 128 mebibytes
         env:
           - name: REDIS_URL
             # Environment variable service discovery
@@ -49,3 +55,5 @@ spec:
               secretKeyRef:
                 name: app-tier-secret
                 key: password
+
+# kubectl apply -f app-tier.yaml -n deployments

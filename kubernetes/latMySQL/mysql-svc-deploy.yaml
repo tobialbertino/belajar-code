@@ -9,6 +9,7 @@ spec:
     app: mysql
   clusterIP: None
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:

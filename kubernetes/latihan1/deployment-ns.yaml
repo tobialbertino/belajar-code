@@ -4,3 +4,5 @@ metadata:
   name: deployments
   labels:
     app: counter
+
+# kubectl apply -f deployment-ns.yaml

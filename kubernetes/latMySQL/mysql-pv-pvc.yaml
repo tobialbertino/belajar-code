@@ -13,6 +13,7 @@ spec:
   hostPath:
     path: "/mnt/data"
 ---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -24,3 +25,7 @@ spec:
   resources:
     requests:
       storage: 20Gi
+
+# kubectl apply -f mysql-pv-pvc.yaml -n stateful-ns
+# kubectl apply -f mysql-svc-deploy.yaml -n stateful-ns
+# kubectl describe deployment mysql -n stateful-ns
