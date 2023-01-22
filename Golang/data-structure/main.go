@@ -1,6 +1,7 @@
 package main
 
 import (
+	"data-structure/hashtable"
 	"data-structure/linkedlist"
 	"data-structure/stackqueue"
 	"data-structure/tree"
@@ -8,6 +9,11 @@ import (
 )
 
 func main() {
+	hashtable.TestHash()
+}
+
+// temp code
+func TestTrie() {
 	trie.TestTrie()
 }
 
