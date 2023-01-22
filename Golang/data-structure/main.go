@@ -3,10 +3,16 @@ package main
 import (
 	"data-structure/linkedlist"
 	"data-structure/stackqueue"
+	"data-structure/tree"
+	"data-structure/trie"
 )
 
 func main() {
+	trie.TestTrie()
+}
 
+func TestTree() {
+	tree.TestBinary()
 }
 
 func TestStackQueue() {
