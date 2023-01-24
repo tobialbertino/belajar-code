@@ -1,7 +1,9 @@
 package main
 
 import (
+	"data-structure/graph"
 	"data-structure/hashtable"
+	"data-structure/heap"
 	"data-structure/linkedlist"
 	"data-structure/stackqueue"
 	"data-structure/tree"
@@ -9,10 +11,18 @@ import (
 )
 
 func main() {
-	hashtable.TestHash()
+	graph.TestGraph()
 }
 
 // temp code
+func TestHeap() {
+	heap.TestMaxHeap()
+}
+
+func TestHash() {
+	hashtable.TestHash()
+}
+
 func TestTrie() {
 	trie.TestTrie()
 }
