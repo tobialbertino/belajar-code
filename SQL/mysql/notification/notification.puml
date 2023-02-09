@@ -1,9 +1,21 @@
 @startuml notification_db-dasign
 
 entity User {
-    * id VARCHAR(100) 
+    * id VARCHAR(100) <<PK>>
     --
     * name VARCHAR(100) 
 }
+
+entity Notification {
+    * id INT AUTO INCREMENT <<PK>>
+    --
+    * title VARCHAR(255)
+    * detail TEXT
+    * created_at TIMESTAMP
+    --
+    user_id VARCHAR(100) <<FK>>
+}
+
+User ||-o{ Notification
 
 @enduml
