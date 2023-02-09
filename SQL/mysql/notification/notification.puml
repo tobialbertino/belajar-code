@@ -1,0 +1,9 @@
+@startuml notification_db-dasign
+
+entity User {
+    * id VARCHAR(100) 
+    --
+    * name VARCHAR(100) 
+}
+
+@enduml
