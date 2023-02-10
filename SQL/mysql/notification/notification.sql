@@ -50,3 +50,63 @@ WHERE (
         OR user_id IS NULL
     )
 ORDER BY created_at DESC;
+
+-- Category
+
+CREATE TABLE category(
+    id VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+
+    PRIMARY KEY (id)
+);
+SHOW TABLES;
+
+ALTER TABLE notification
+ADD COLUMN category_id VARCHAR(100);
+
+DESCRIBE notification;
+
+ALTER TABLE notification
+ADD CONSTRAINT fk_notification_category
+FOREIGN KEY (category_id) REFERENCES category(id);
+
+DESC notification;
+
+INSERT INTO category(id, name) VALUES ('INFO', 'Info');
+INSERT INTO category(id, name) VALUES ('PROMO', 'Promo');
+
+SELECT * FROM category;
+
+UPDATE notification SET category_id = 'INFO'
+WHERE id = 1;
+UPDATE notification SET category_id = 'PROMO'
+WHERE id = 2;
+UPDATE notification SET category_id = 'INFO'
+WHERE id = 3;
+
+SELECT *
+FROM notification
+WHERE (
+        user_id = 'tobi2'
+        OR user_id IS NULL
+    )
+ORDER BY created_at DESC;
+
+SELECT *
+from notification n
+    JOIN category c ON (n.category_id = c.id)
+WHERE (
+        n.user_id = 'tobi'
+        OR n.user_id IS NULL
+    )
+ORDER BY n.created_at DESC;
+
+SELECT *
+from notification n
+    JOIN category c ON (n.category_id = c.id)
+WHERE (
+        n.user_id = 'tobi2'
+        OR n.user_id IS NULL
+    )
+    AND c.id = 'INFO'
+ORDER BY n.created_at DESC;
