@@ -53,7 +53,7 @@ ORDER BY created_at DESC;
 
 -- Category
 
-CREATE TABLE category(
+CREATE TABLE category (
     id VARCHAR(100) NOT NULL,
     name VARCHAR(100) NOT NULL,
 
@@ -110,3 +110,74 @@ WHERE (
     )
     AND c.id = 'INFO'
 ORDER BY n.created_at DESC;
+
+-- Notification Read
+
+CREATE TABLE notification_read (
+    id INT NOT NULL AUTO_INCREMENT,
+    is_read BOOLEAN NOT NULL,
+    notification_id INT NOT NULL,
+    user_id VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE notification_read
+ADD CONSTRAINT fk_notification_read
+FOREIGN KEY (notification_id) REFERENCES notification(id);
+
+ALTER TABLE notification_read
+ADD CONSTRAINT fk_notification_read_user
+FOREIGN KEY (user_id) REFERENCES user(id);
+
+DESC notification_read;
+
+INSERT INTO notification_read(is_read, notification_id, user_id)
+VALUES (true, 2, 'tobi');
+INSERT INTO notification_read(is_read, notification_id, user_id)
+VALUES (true, 2, 'tobi2');
+
+SELECT * FROM notification_read;
+
+SELECT *
+from notification n
+    JOIN category c ON (n.category_id = c.id)
+    LEFT JOIN notification_read nr ON (nr.notification_id = n.id)
+WHERE (
+        n.user_id = 'tobi'
+        OR n.user_id IS NULL
+    )
+    AND (
+        nr.user_id = 'tobi'
+        OR nr.user_id IS NULL
+    )
+ORDER BY n.created_at DESC;
+
+INSERT INTO notification(title, detail, created_at, user_id, category_id)
+VALUES ('Contoh Pesanan Lagi', 'Detail Pesanan Lagi', CURRENT_TIMESTAMP(), 'tobi', 'INFO');
+
+INSERT INTO notification(title, detail, created_at, user_id, category_id)
+VALUES ('Contoh Promo Lagi', 'Detail Promo Lagi', CURRENT_TIMESTAMP(), NULL, 'PROMO');
+
+-- COUNTER
+
+SELECT COUNT(*)
+from notification n
+    JOIN category c ON (n.category_id = c.id)
+    LEFT JOIN notification_read nr ON (nr.notification_id = n.id)
+WHERE (
+        n.user_id = 'tobi'
+        OR n.user_id IS NULL
+    )
+    AND (
+        nr.user_id IS NULL
+    )
+ORDER BY n.created_at DESC;
+
+SELECT * FROM notification;
+
+INSERT INTO notification_read(is_read, notification_id, user_id)
+VALUES (true, 6, 'tobi');
+INSERT INTO notification_read(is_read, notification_id, user_id)
+VALUES (true, 7, 'tobi');
+INSERT INTO notification_read(is_read, notification_id, user_id)
+VALUES (true, 1, 'tobi');
