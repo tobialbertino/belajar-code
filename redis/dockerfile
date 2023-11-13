@@ -1,0 +1,9 @@
+FROM redis:7.2.3-alpine3.18
+
+WORKDIR /config
+
+COPY /config/redis.conf /config
+
+# EXPOSE 6379/tcp
+
+# CMD redis-server /config/redis.conf
