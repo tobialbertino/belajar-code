@@ -1,9 +1,14 @@
 FROM redis:7.2.3-alpine3.18
 
-WORKDIR /config
+ENV APP_DATA=/volume-redis
+
+# WORKDIR /config
+RUN mkdir -p /config
 
 COPY /config/redis.conf /config
+COPY input-bulk.txt /config
+VOLUME [ ${APP_DATA} ]
 
 # EXPOSE 6379/tcp
 
-# CMD redis-server /config/redis.conf
+CMD ["redis-server", "/config/redis.conf"]
