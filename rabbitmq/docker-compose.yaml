@@ -15,3 +15,5 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - "rabbitMQ-1:/var/lib/rabbitmq"
