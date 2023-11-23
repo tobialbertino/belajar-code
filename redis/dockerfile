@@ -1,6 +1,6 @@
 FROM redis:7.2.3-alpine3.18
 
-ENV APP_DATA=/volume-redis
+ENV APP_DATA=/data
 
 # WORKDIR /config
 RUN mkdir -p /config
