@@ -1,0 +1,19 @@
+version: "3.8"
+
+volumes:
+  mongo-data1:
+    name: mongo-data1
+
+services:
+  # this is example comment
+  mongodb1:
+    container_name: mongodb1
+    image:  mongo:7.0.3
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test
+      - MONGO_INITDB_DATABASE=admin
+    volumes:
+      - "mongo-data1:/data/db"

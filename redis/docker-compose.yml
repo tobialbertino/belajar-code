@@ -1,0 +1,15 @@
+version: "3.8"
+
+volumes:
+  redis1:
+    name: redis1
+
+services:
+  # this is example comment
+  redisDefault:
+    container_name: redisDefault
+    image: redis:7.2.3-alpine3.18
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis1:/data"
