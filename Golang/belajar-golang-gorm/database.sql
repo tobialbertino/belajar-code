@@ -1,0 +1,21 @@
+CREATE TABLE sample
+(
+    id   VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+SELECT *
+FROM sample;
+
+CREATE TABLE users
+(
+    id         VARCHAR(100) NOT NULL,
+    password   VARCHAR(100) NOT NULL,
+    name       VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    primary key (id)
+);
+
+SELECT * FROM users;
