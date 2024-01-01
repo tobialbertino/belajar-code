@@ -18,7 +18,8 @@ CREATE TABLE users
     primary key (id)
 );
 
-SELECT * FROM users;
+SELECT *
+FROM users;
 
 alter table users
     rename column name to first_name;
@@ -28,3 +29,24 @@ alter table users
 
 alter table users
     add column last_name varchar(100) null after middle_name;
+
+CREATE TABLE user_logs
+(
+    id         INT AUTO_INCREMENT,
+    user_id    VARCHAR(100) NOT NULL,
+    action     VARCHAR(100) NOT NULL,
+    created_at timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+delete
+from user_logs;
+
+alter table user_logs
+    modify created_at bigint not null;
+
+alter table user_logs
+    modify updated_at bigint not null;
+
+SELECT * FROM user_logs;
