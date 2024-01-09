@@ -77,3 +77,18 @@ create table wallets
 );
 
 DESC wallets;
+
+SELECT * FROM wallets;
+
+create table addresses
+(
+    id         bigint       not null auto_increment,
+    user_id    varchar(100) not null,
+    address    varchar(100) not null,
+    created_at timestamp    not null default current_timestamp,
+    updated_at timestamp    not null default current_timestamp on update current_timestamp,
+    primary key (id),
+    foreign key (user_id) references users (id)
+);
+
+DESC addresses;
