@@ -1,20 +1,31 @@
 package belajar_golang_gorm
 
-import "time"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type User struct {
-	ID          string    `gorm:"column:id;primaryKey;<-:create"`
-	Password    string    `gorm:"column:password"`
-	Name        Name      `gorm:"embedded"`
-	CreatedAt   time.Time `gorm:"column:created_at;autoCreateTime:true;<-:create"`
-	UpdatedAt   time.Time `gorm:"column:updated_at;autoCreateTime:true;autoUpdateTime:true"`
-	Information string    `gorm:"-"`
-	Wallet      Wallet    `gorm:"foreignKey:user_id;references:id"`
-	Addresses   []Address `gorm:"foreignKey:user_id;references:id"`
+	ID           string    `gorm:"column:id;primaryKey;<-:create"`
+	Password     string    `gorm:"column:password"`
+	Name         Name      `gorm:"embedded"`
+	CreatedAt    time.Time `gorm:"column:created_at;autoCreateTime:true;<-:create"`
+	UpdatedAt    time.Time `gorm:"column:updated_at;autoCreateTime:true;autoUpdateTime:true"`
+	Information  string    `gorm:"-"`
+	Wallet       Wallet    `gorm:"foreignKey:user_id;references:id"`
+	Addresses    []Address `gorm:"foreignKey:user_id;references:id"`
+	LikeProducts []Product `gorm:"many2many:user_like_product;foreignKey:id;joinForeignKey:user_id;references:id;joinReferences:product_id"`
 }
 
-func (u User) TableName() string {
+func (u *User) TableName() string {
 	return "users"
+}
+
+func (u *User) BeforeCreate(db *gorm.DB) error {
+	if u.ID == "" {
+		u.ID = "user-" + time.Now().Format("20060102150405")
+	}
+	return nil
 }
 
 type Name struct {

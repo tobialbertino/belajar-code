@@ -1,6 +1,7 @@
 package belajar_golang_gorm
 
 import (
+	"context"
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/mysql"
@@ -9,16 +10,30 @@ import (
 	"gorm.io/gorm/logger"
 	"strconv"
 	"testing"
+	"time"
 )
 
 func OpenConnection() *gorm.DB {
 	dialect := mysql.Open("root:mysql@tcp(127.0.0.1:3306)/belajar_golang_gorm?charset=utf8mb4&parseTime=True&loc=Local")
 	db, err := gorm.Open(dialect, &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
+		Logger:                 logger.Default.LogMode(logger.Info),
+		SkipDefaultTransaction: true,
+		PrepareStmt:            true,
 	})
 	if err != nil {
 		panic(err)
 	}
+
+	sqlDB, err := db.DB()
+	if err != nil {
+		panic(err)
+	}
+
+	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetConnMaxLifetime(30 * time.Minute)
+	sqlDB.SetConnMaxIdleTime(5 * time.Minute)
+
 	return db
 }
 
@@ -565,4 +580,279 @@ func TestTakePreloadJoinOneToMany(t *testing.T) {
 	err := db.Model(&User{}).Preload("Addresses").Joins("Wallet").
 		Take(&user, "users.id = ?", "1").Error
 	assert.Nil(t, err)
+}
+
+func TestBelongsTo(t *testing.T) {
+	fmt.Println("Preload")
+	var addresses []Address
+	err := db.Model(&Address{}).Preload("User").Find(&addresses).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(addresses))
+
+	fmt.Println("Joins")
+	addresses = []Address{}
+	err = db.Model(&Address{}).Joins("User").Find(&addresses).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(addresses))
+}
+
+func TestBelongsToWallet(t *testing.T) {
+	fmt.Println("Preload")
+	var wallets []Wallet
+	err := db.Model(&Wallet{}).Preload("User").Find(&wallets).Error
+	assert.Nil(t, err)
+
+	fmt.Println("Joins")
+	wallets = []Wallet{}
+	err = db.Model(&Wallet{}).Joins("User").Find(&wallets).Error
+	assert.Nil(t, err)
+}
+
+func TestCreateManyToMany(t *testing.T) {
+	product := Product{
+		ID:    "P001",
+		Name:  "Contoh Product",
+		Price: 1_000_000,
+	}
+	err := db.Create(&product).Error
+	assert.Nil(t, err)
+
+	err = db.Table("user_like_product").Create(map[string]interface{}{
+		"user_id":    "1",
+		"product_id": "P001",
+	}).Error
+	assert.Nil(t, err)
+
+	err = db.Table("user_like_product").Create(map[string]interface{}{
+		"user_id":    "2",
+		"product_id": "P001",
+	}).Error
+	assert.Nil(t, err)
+}
+
+func TestPreloadManyToMany(t *testing.T) {
+	var product Product
+	err := db.Preload("LikedByUsers").Take(&product, "id = ?", "P001").Error
+	assert.Nil(t, err)
+	assert.Equal(t, 2, len(product.LikedByUsers))
+}
+
+func TestPreloadManyToManyUser(t *testing.T) {
+	var user User
+	err := db.Preload("LikeProducts").Take(&user, "id = ?", "1").Error
+	assert.Nil(t, err)
+	assert.Equal(t, 1, len(user.LikeProducts))
+}
+
+func TestAssociationFind(t *testing.T) {
+	var product Product
+	err := db.Take(&product, "id = ?", "P001").Error
+	assert.Nil(t, err)
+
+	var users []User
+	err = db.Model(&product).
+		Where("users.first_name LIKE ?", "User%").
+		Association("LikedByUsers").
+		Find(&users)
+	assert.Nil(t, err)
+	assert.Equal(t, 1, len(users))
+}
+
+func TestAssociationAppend(t *testing.T) {
+	var user User
+	err := db.Take(&user, "id = ?", "3").Error
+	assert.Nil(t, err)
+
+	var product Product
+	err = db.Take(&product, "id = ?", "P001").Error
+	assert.Nil(t, err)
+
+	err = db.Model(&product).
+		Association("LikedByUsers").
+		Append(&user)
+	assert.Nil(t, err)
+}
+
+func TestAssociationReplace(t *testing.T) {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		var user User
+		err := tx.Take(&user, "id = ?", "1").Error
+		assert.Nil(t, err)
+
+		wallet := Wallet{
+			ID:      "01",
+			UserId:  user.ID,
+			Balance: 1_000_000,
+		}
+
+		err = tx.Model(&user).Association("Wallet").Replace(&wallet)
+		return err
+	})
+	assert.Nil(t, err)
+}
+
+func TestAssociationDelete(t *testing.T) {
+	var user User
+	err := db.Take(&user, "id = ?", "3").Error
+	assert.Nil(t, err)
+
+	var product Product
+	err = db.Take(&product, "id = ?", "P001").Error
+	assert.Nil(t, err)
+
+	err = db.Model(&product).Association("LikedByUsers").Delete(&user)
+	assert.Nil(t, err)
+}
+
+func TestAssociationClear(t *testing.T) {
+	var product Product
+	err := db.Take(&product, "id = ?", "P001").Error
+	assert.Nil(t, err)
+
+	err = db.Model(&product).Association("LikedByUsers").Clear()
+	assert.Nil(t, err)
+}
+
+func TestPreloadingWithCondition(t *testing.T) {
+	var user User
+	err := db.
+		Preload("Wallet", "balance > ?", 100).
+		Take(&user, "id = ?", "1").Error
+	assert.Nil(t, err)
+
+	fmt.Println(user)
+}
+
+func TestPreloadingNested(t *testing.T) {
+	var wallet Wallet
+	err := db.Preload("User.Addresses").Take(&wallet, "id = ?", "2").Error
+	assert.Nil(t, err)
+
+	fmt.Println(wallet)
+	fmt.Println(wallet.User)
+	fmt.Println(wallet.User.Addresses)
+}
+
+func TestPreloadingAll(t *testing.T) {
+	var user User
+	err := db.Preload(clause.Associations).Take(&user, "id = ?", "1").Error
+	assert.Nil(t, err)
+}
+
+func TestJoinQuery(t *testing.T) {
+	var users []User
+	err := db.Joins("join wallets on wallets.user_id = users.id").Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(users))
+
+	users = []User{}
+	err = db.Joins("Wallet").Find(&users).Error // left join
+	assert.Nil(t, err)
+	assert.Equal(t, 17, len(users))
+}
+
+func TestJoinWithCondition(t *testing.T) {
+	var users []User
+	err := db.Joins("join wallets on wallets.user_id = users.id AND wallets.balance > ?", 500_000).Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(users))
+
+	users = []User{}
+	err = db.Joins("Wallet").Where("Wallet.balance > ?", 500_000).Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(users))
+}
+
+func TestCount(t *testing.T) {
+	var count int64
+	err := db.Model(&User{}).Joins("Wallet").Where("Wallet.balance > ?", 500_000).Count(&count).Error
+	assert.Nil(t, err)
+	assert.Equal(t, int64(4), count)
+}
+
+type AggregationResult struct {
+	TotalBalance int64
+	MinBalance   int64
+	MaxBalance   int64
+	AvgBalance   float64
+}
+
+func TestAggregation(t *testing.T) {
+	var result AggregationResult
+	err := db.Model(&Wallet{}).
+		Select(
+			"sum(balance) as total_balance",
+			"min(balance) as min_balance",
+			"max(balance) as max_balance",
+			"avg(balance) as avg_balance").
+		Take(&result).Error
+	assert.Nil(t, err)
+
+	assert.Equal(t, int64(4_000_000), result.TotalBalance)
+	assert.Equal(t, int64(1_000_000), result.MinBalance)
+	assert.Equal(t, int64(1_000_000), result.MaxBalance)
+	assert.Equal(t, float64(1_000_000), result.AvgBalance)
+}
+
+func TestAggregationGroupByAndHaving(t *testing.T) {
+	var results []AggregationResult
+	err := db.Model(&Wallet{}).
+		Select(
+			"sum(balance) as total_balance",
+			"min(balance) as min_balance",
+			"max(balance) as max_balance",
+			"avg(balance) as avg_balance").
+		Joins("User").
+		Group("User.id").
+		Having("sum(balance) > ?", 500_000).
+		Find(&results).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(results))
+}
+
+func TestContext(t *testing.T) {
+	ctx := context.Background()
+
+	var users []User
+	err := db.WithContext(ctx).Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 17, len(users))
+}
+
+func BrokeWalletBalance(db *gorm.DB) *gorm.DB {
+	return db.Where("balance = ?", 0)
+}
+
+func SultanWalletBalance(db *gorm.DB) *gorm.DB {
+	return db.Where("balance > ?", 1000000)
+}
+
+func TestScopes(t *testing.T) {
+	var wallets []Wallet
+	err := db.Scopes(BrokeWalletBalance).Find(&wallets).Error
+	assert.Nil(t, err)
+
+	wallets = []Wallet{}
+	err = db.Scopes(SultanWalletBalance).Find(&wallets).Error
+	assert.Nil(t, err)
+}
+
+func TestMigrator(t *testing.T) {
+	err := db.Migrator().AutoMigrate(&GuestBook{})
+	assert.Nil(t, err)
+}
+
+func TestHook(t *testing.T) {
+	user := User{
+		Password: "rahasia",
+		Name: Name{
+			FirstName: "User 100",
+		},
+	}
+
+	err := db.Create(&user).Error
+	assert.Nil(t, err)
+	assert.NotEqual(t, "", user.ID)
+
+	fmt.Println(user.ID)
 }
