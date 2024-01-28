@@ -76,3 +76,75 @@ func TestSortedSet(t *testing.T) {
 	assert.Equal(t, "Joko", client.ZPopMax(ctx, "scores").Val()[0].Member)
 	assert.Equal(t, "Budi", client.ZPopMax(ctx, "scores").Val()[0].Member)
 }
+
+func TestHash(t *testing.T) {
+	client.HSet(ctx, "user:1", "id", "1")
+	client.HSet(ctx, "user:1", "name", "Tobi")
+	client.HSet(ctx, "user:1", "email", "tobi@example.com")
+
+	user := client.HGetAll(ctx, "user:1").Val()
+
+	assert.Equal(t, "1", user["id"])
+	assert.Equal(t, "Tobi", user["name"])
+	assert.Equal(t, "tobi@example.com", user["email"])
+
+	client.Del(ctx, "user:1")
+}
+
+func TestGeoPoint(t *testing.T) {
+	client.GeoAdd(ctx, "sellers", &redis.GeoLocation{
+		Name:      "Toko A",
+		Longitude: 106.818489,
+		Latitude:  -6.178966,
+	})
+	client.GeoAdd(ctx, "sellers", &redis.GeoLocation{
+		Name:      "Toko B",
+		Longitude: 106.821568,
+		Latitude:  -6.180662,
+	})
+
+	distance := client.GeoDist(ctx, "sellers", "Toko A", "Toko B", "km").Val()
+	assert.Equal(t, 0.3892, distance)
+
+	sellers := client.GeoSearch(ctx, "sellers", &redis.GeoSearchQuery{
+		Longitude:  106.819143,
+		Latitude:   -6.180182,
+		Radius:     5,
+		RadiusUnit: "km",
+	}).Val()
+
+	assert.Equal(t, []string{"Toko A", "Toko B"}, sellers)
+}
+
+func TestHyperLogLog(t *testing.T) {
+	client.PFAdd(ctx, "visitors", "tobi", "Khoiru", "Albertino")
+	client.PFAdd(ctx, "visitors", "tobi", "budi", "joko")
+	client.PFAdd(ctx, "visitors", "rully", "budi", "joko")
+
+	total := client.PFCount(ctx, "visitors").Val()
+	assert.Equal(t, int64(6), total)
+}
+
+func TestPipeline(t *testing.T) {
+	_, err := client.Pipelined(ctx, func(pipeliner redis.Pipeliner) error {
+		pipeliner.SetEx(ctx, "name", "Tobi", 5*time.Second)
+		pipeliner.SetEx(ctx, "address", "Indonesia", 5*time.Second)
+		return nil
+	})
+	assert.Nil(t, err)
+
+	assert.Equal(t, "Tobi", client.Get(ctx, "name").Val())
+	assert.Equal(t, "Indonesia", client.Get(ctx, "address").Val())
+}
+
+func TestTransaction(t *testing.T) {
+	_, err := client.TxPipelined(ctx, func(pipeliner redis.Pipeliner) error {
+		pipeliner.SetEx(ctx, "name", "Tobi", 5*time.Second)
+		pipeliner.SetEx(ctx, "address", "Tangerang", 5*time.Second)
+		return nil
+	})
+	assert.Nil(t, err)
+
+	assert.Equal(t, "Tobi", client.Get(ctx, "name").Val())
+	assert.Equal(t, "Tangerang", client.Get(ctx, "address").Val())
+}
