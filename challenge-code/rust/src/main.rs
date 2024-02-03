@@ -1,7 +1,7 @@
 mod challenge;
 
 fn main() {
-    println!("Hello, world!");
-    challenge::c1_grow::grow(vec![1,2,3]);
-    challenge::c2_reverse_sec::reverse_seq(5);
+    let a = challenge::c8_count_sheep::count_sheep(2);
+    println!("{a}");
+    
 }
