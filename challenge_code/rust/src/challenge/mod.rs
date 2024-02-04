@@ -5,3 +5,4 @@ pub mod c5_zero_fuel;
 pub mod c6_dna_to_rna;
 pub mod c7_count_by_x;
 pub mod c8_count_sheep;
+pub mod c9_max_min;
