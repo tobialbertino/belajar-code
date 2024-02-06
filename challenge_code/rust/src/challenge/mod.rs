@@ -6,4 +6,5 @@
 // pub mod c7_count_by_x;
 // pub mod c8_count_sheep;
 // pub mod c9_max_min;
-pub mod c10_string2array;
+// pub mod c10_string2array;
+pub mod c11_rps;
