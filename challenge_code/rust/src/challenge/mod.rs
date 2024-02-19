@@ -10,4 +10,5 @@
 // pub mod c11_rps;
 // pub mod c12_arr_plus_arr;
 // pub mod c13_total_points;
-pub mod c14_get_grade;
+// pub mod c14_get_grade;
+pub mod c16_get_average;
