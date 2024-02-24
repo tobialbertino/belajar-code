@@ -11,4 +11,5 @@
 // pub mod c12_arr_plus_arr;
 // pub mod c13_total_points;
 // pub mod c14_get_grade;
-pub mod c16_get_average;
+// pub mod c16_get_average;
+pub mod c18_personalize_message;
