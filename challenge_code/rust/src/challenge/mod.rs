@@ -12,4 +12,6 @@
 // pub mod c13_total_points;
 // pub mod c14_get_grade;
 // pub mod c16_get_average;
-pub mod c18_personalize_message;
+// pub mod c18_personalize_message;
+// pub mod c19_mix_sum_arr;
+pub mod c20_feast;
