@@ -14,4 +14,7 @@
 // pub mod c16_get_average;
 // pub mod c18_personalize_message;
 // pub mod c19_mix_sum_arr;
-pub mod c20_feast;
+// pub mod c20_feast;
+// pub mod c22_remove_exclamation_marks;
+// pub mod c23_count_the_monkey;
+pub mod c24_quarter_of_the_year;
