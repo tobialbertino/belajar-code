@@ -17,4 +17,8 @@
 // pub mod c20_feast;
 // pub mod c22_remove_exclamation_marks;
 // pub mod c23_count_the_monkey;
-pub mod c24_quarter_of_the_year;
+// pub mod c24_quarter_of_the_year;
+// pub mod c25_double_char;
+// pub mod c26_update_light;
+// pub mod c27_set_alarm;
+pub mod c28_bonus_time;
