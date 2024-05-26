@@ -80,3 +80,127 @@ fn number_conversion() {
     let e: i8 = d as i8;
     println!("{}", e);
 }
+
+#[test]
+fn numeric_operator() {
+    let a = 10;
+    let b = 10;
+    let c = a * b;
+    println!("{}", c);
+    let d = a / b;
+    println!("{}", d);
+    let e = a + b;
+    println!("{}", e);
+}
+
+#[test]
+fn augmented_assigment() {
+    let mut a = 10;
+    println!("{}", a);
+
+    a += 10;
+    println!("{}", a);
+
+    a -= 10;
+    println!("{}", a);
+}
+
+#[test]
+fn boolean() {
+    let a = true;
+    let b: bool = false;
+    println!("{} {}", a, b);
+}
+
+#[test]
+fn comparison() {
+    let a = 10;
+    let b = 20;
+
+    let result = a > b;
+    println!("{}", result);
+}
+
+#[test]
+fn boolean_operator() {
+    let absen = 75;
+    let nilai_akhir = 80;
+
+    let lulus_absen = absen >= 75;
+    let lulus_nilai_akhir = nilai_akhir >= 75;
+
+    let lulus = lulus_absen && lulus_nilai_akhir;
+    println!("{}", lulus);
+}
+
+
+#[test]
+fn char_type() {
+    let char1: char = 'a';
+    let char2: char = 'b';
+
+    println!("{} {}", char1, char2);
+}
+
+#[test]
+fn tuple() {
+    let mut data: (i32, f64, bool) = (10, 10.5, true);
+    println!("{:?}", data);
+
+    // let a = data.0;
+    // let b = data.1;
+    // let c = data.2;
+
+    // destructor
+    let (a, b, c) = data;
+    println!("{} {} {}", a, b, c);
+
+    data.0 = 20;
+    data.1 = 20.5;
+    data.2 = false;
+    println!("{:?}", data);
+}
+
+fn unit() {
+    println!("Hello");
+}
+
+#[test]
+fn test_unit() {
+    let result: () = unit();
+    println!("{:?}", result);
+
+    let test: () = ();
+    println!("{:?}", test)
+}
+
+#[test]
+fn array() {
+    let mut array: [i32; 5] = [1, 2, 3, 4, 5];
+    println!("{:?}", array);
+
+    let a = array[0];
+    let b = array[1];
+    println!("{} {}", a, b);
+
+    array[0] = 10;
+    array[1] = 20;
+    println!("{:?}", array);
+
+    let length = array.len();
+    println!("{}", length);
+}
+
+#[test]
+fn two_dimensional_array() {
+    let matrix: [[i32; 2]; 2] = [
+        [1, 2],
+        [3, 4]
+    ];
+
+    println!("{:?}", matrix);
+    println!("{:?}", matrix[0]);
+    println!("{}", matrix[0][0]);
+}
+
+
