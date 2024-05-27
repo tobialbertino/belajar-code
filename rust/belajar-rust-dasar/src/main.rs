@@ -203,4 +203,107 @@ fn two_dimensional_array() {
     println!("{}", matrix[0][0]);
 }
 
+const MAXIMUM: i32 = 100;
+
+#[test]
+fn constant() {
+    const MINIMUM: i32 = 0;
+    println!("{} {}", MINIMUM, MAXIMUM)
+}
+
+#[test]
+fn variable_scope() {
+    println!("{}", MAXIMUM);
+
+    let eko = 1;
+
+    { // inner scope
+        println!("{}", eko);
+        let kurniawan = 2;
+        println!("{}", kurniawan);
+    }
+
+    // println!("{}", kurniawan); //error
+}
+
+#[test]
+fn stack_heap() {
+    function_a();
+    function_b();
+}
+
+fn function_a() {
+    let a = 10;
+    let b = String::from("Tobi");
+    println!("{} {}", a, b);
+}
+
+fn function_b() {
+    let a = 10;
+    let b = String::from("Albertino");
+    println!("{} {}", a, b);
+}
+
+#[test]
+fn string() {
+    let name: &str = " Tobi Albertino ";
+    let trim = name.trim();
+
+    println!("{}", name);
+    println!("{}", trim);
+}
+
+#[test]
+fn string_type() {
+    let mut name: String = String::from("Tobi");
+    println!("{}", name);
+
+    name.push_str(" Albertino");
+    println!("{}", name);
+
+    let budi = name.replace("Tobi", "Budi");
+    println!("{}", name);
+    println!("{}", budi);
+}
+
+#[test]
+fn ownership_rules() {
+    let a = 10;
+
+    {
+        let b = 10;
+        println!("{}", b);
+    }
+
+    println!("{}", a);
+}
+
+#[test]
+fn data_copy() {
+    let a = 10;
+    // for data (fixed size) store on stack memory, data will copy
+    let b = a;
+
+    println!("{} {}", a, b);
+}
+
+#[test]
+fn ownership_movement() {
+    let name: String = String::from("Tobi");
+    println!("{}", name);
+
+    // ownership moved, for data store on heap memory
+    let name2: String = name;
+    println!("{}", name2);
+    // println!("{}", name1); error
+}
+
+#[test]
+fn clone() {
+    let name1 = String::from("Tobi");
+    let name2 = name1.clone();
+
+    println!("{} {}", name1, name2);
+}
+
 
