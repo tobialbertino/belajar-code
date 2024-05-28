@@ -306,4 +306,16 @@ fn clone() {
     println!("{} {}", name1, name2);
 }
 
+#[test]
+fn if_expression() {
+    let value = 6;
+    let result: &str = if value >= 8 {
+        "Good"
+    } else if value >= 6 {
+        "Not Bad"
+    } else {
+        "Very Bad"
+    };
 
+    println!("{}", result);
+}
