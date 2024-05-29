@@ -316,6 +316,5 @@ fn if_expression() {
     } else {
         "Very Bad"
     };
-
     println!("{}", result);
 }
