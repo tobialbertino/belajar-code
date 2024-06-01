@@ -318,3 +318,108 @@ fn if_expression() {
     };
     println!("{}", result);
 }
+
+#[test]
+fn loop_expression() {
+    let mut counter = 0;
+    loop {
+        counter += 1;
+        if counter > 10 {
+            break;
+        } else if counter % 2 == 0 {
+            continue;
+        }
+
+        println!("Counter: {}", counter);
+    }
+}
+
+#[test]
+fn loop_return_value() {
+    let mut counter = 0;
+    let result = loop {
+        counter += 1;
+        if counter > 10 {
+            break counter * 2;
+        }
+    };
+    println!("{}", result);
+}
+
+#[test]
+fn loop_label() {
+    let mut number = 0;
+    'outer: loop {
+        let mut i = 1;
+        loop {
+            if number > 10 {
+                break 'outer; // break outer loop
+            }
+
+            println!("{} * {} = {}", number, i, number * i);
+            i += 1;
+            if i > 10 {
+                break; // break inner loop
+            }
+        }
+        number += 1;
+    }
+}
+
+#[test]
+fn while_loop() {
+    let mut counter = 0;
+    while counter <= 10 {
+        if counter % 2 == 0 {
+            println!("Counter: {}", counter);
+        }
+        counter += 1;
+    }
+}
+
+#[test]
+fn array_iteration() {
+    let array: [&str; 5] = ["A", "B", "C", "D", "E"];
+    let mut index = 0;
+
+    while index < array.len() {
+        println!("value: {}", array[index]);
+        index += 1;
+    }
+}
+
+#[test]
+fn array_iteration_for_loop() {
+    let array: [&str; 5] = ["A", "B", "C", "D", "E"];
+
+    for value in array {
+        println!("value: {}", value);
+    }
+}
+
+#[test]
+fn range() {
+    let range = 0..5;
+    println!("Start: {}", range.start);
+    println!("End: {}", range.end);
+
+    let array: [&str; 5] = ["A", "B", "C", "D", "E"];
+
+    for i in range {
+        println!("{}", array[i]);
+    }
+}
+
+#[test]
+fn range_inclusive() {
+    let range = 0..=4;
+    println!("Start: {}", range.start());
+    println!("End: {}", range.end());
+
+    let array: [&str; 5] = ["A", "B", "C", "D", "E"];
+
+    for i in range {
+        println!("{}", array[i]);
+    }
+}
+
