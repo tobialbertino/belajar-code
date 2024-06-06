@@ -640,9 +640,10 @@ impl GeoPoint {
 #[test]
 fn test_associated_function() {
     let geo_point: GeoPoint = GeoPoint::new(10.0, 10.0);
-    println!("{}",geo_point.0);
-    println!("{}",geo_point.1);
+    println!("{}", geo_point.0);
+    println!("{}", geo_point.1);
 }
+
 #[test]
 fn test_tuple_struct() {
     let geo_point = GeoPoint(-1.1, 1.1);
@@ -668,4 +669,182 @@ fn test_method() {
     };
 
     person.say_hello("Budi");
+
+    println!("{}", person.last_name);
+}
+
+enum Level {
+    Regular,
+    Premium,
+    Platinum,
+}
+
+#[test]
+fn test_enum() {
+    let level: Level = Level::Premium;
+    let _level2: Level = Level::Regular;
+    let _level3: Level = Level::Platinum;
+
+    match level {
+        Level::Regular => {
+            println!("Regular")
+        }
+        Level::Premium => {
+            println!("Premium")
+        }
+        Level::Platinum => {
+            println!("Platinum")
+        }
+    }
+}
+
+enum Payment {
+    CreditCard(String),
+    BankTransfer(String, String),
+    EWallet(String, String),
+}
+
+impl Payment {
+    fn pay(&self, amount: u32) {
+        match self {
+            Payment::CreditCard(number) => {
+                println!("Paying with credit card {} amount {}", number, amount);
+            }
+            Payment::BankTransfer(bank, number) => {
+                println!("Paying with bank transfer {} {} amount {}", bank, number, amount);
+            }
+            Payment::EWallet(wallet, number) => {
+                println!("Paying with E Wallet {} { } amount {}", wallet, number, amount);
+            }
+        }
+    }
+}
+
+#[test]
+fn test_payment() {
+    let _payment1: Payment = Payment::CreditCard(String::from("123123"));
+    _payment1.pay(123);
+    let _payment2: Payment = Payment::BankTransfer(String::from("123123"), String::from("123"));
+    _payment2.pay(231);
+    let _payment3: Payment = Payment::EWallet(String::from("Gopay"), String::from("123"));
+    _payment3.pay(312);
+}
+
+#[test]
+fn test_match_value() {
+    let name = "Budi";
+
+    match name {
+        "Eko" => {
+            println!("Hello Eko")
+        }
+        "Budi" => {
+            println!("Hello Budi")
+        }
+        other => {
+            println!("Hello {}", other)
+        }
+    }
+
+    match name {
+        "Eko" | "Budi" => {
+            println!("Hello Boss")
+        }
+        other => {
+            println!("Hello {}", other)
+        }
+    }
+}
+
+#[test]
+fn test_range_pattern() {
+    let value = 20;
+    match value {
+        75..=100 => {
+            println!("Great");
+        }
+        50..=74 => {
+            println!("Good");
+        }
+        0..=49 => {
+            println!("Bad");
+        }
+        other => {
+            println!("Invalid value {}", other);
+        }
+    }
+}
+
+#[test]
+fn test_struct_pattern() {
+    let point = GeoPoint::new(2.0, 1.0);
+
+    match point {
+        GeoPoint(long, 0.0) => {
+            println!("long: {}", long);
+        }
+        GeoPoint(0.0, lat) => {
+            println!("lat: {}", lat);
+        }
+        GeoPoint(long, lat) => {
+            println!("long: {}, lat: {}", long, lat);
+        }
+    }
+
+    let person = Person {
+        first_name: String::from("Tobi"),
+        middle_name: String::from("Tobi mid"),
+        last_name: String::from("Tobi last"),
+        age: 20,
+    };
+
+    match person {
+        Person { first_name, last_name, .. } => {
+            println!("{} {}", first_name, last_name);
+        }
+    }
+}
+
+#[test]
+fn test_ignoring() {
+    let point = GeoPoint::new(2.0, 1.0);
+
+    match point {
+        GeoPoint(long, _) => {
+            println!("long: {}", long);
+        }
+    }
+}
+
+#[test]
+fn test_ignoring_range() {
+    let value = 110;
+    match value {
+        75..=100 => {
+            println!("Great");
+        }
+        50..=74 => {
+            println!("Good");
+        }
+        0..=49 => {
+            println!("Bad");
+        }
+        _ => {
+            println!("Invalid value");
+        }
+    }
+}
+
+#[test]
+fn test_match_expression() {
+    let val = 2;
+
+    let result = match val {
+        0 => "nol",
+        1 => "satu",
+        2 => "dua",
+        _ => "invalid",
+    };
+
+    println!("{}", result);
 }
