@@ -1104,3 +1104,107 @@ impl<T> GetValue<T> for Point<T> where T: PartialOrd {
         &self.x
     }
 }
+
+use ::core::ops::Add;
+use std::cmp::Ordering;
+
+struct Apple {
+    quantity: i32,
+}
+
+impl Add for Apple {
+    type Output = Apple;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Apple { quantity: self.quantity + rhs.quantity }
+    }
+}
+
+#[test]
+fn test_operator_add() {
+    let apple1 = Apple { quantity: 10 };
+    let apple2 = Apple { quantity: 10 };
+
+    let apple3 = apple1 + apple2;
+    println!("{}", apple3.quantity);
+}
+
+fn double(value: Option<i32>) -> Option<i32> {
+    match value {
+        None => { None }
+        Some(i) => { Some(i * 2) }
+    }
+}
+
+#[test]
+fn test_option() {
+    let result = double(Some(10));
+    println!("{:?}", result);
+
+    let result = double(None);
+    println!("{:?}", result);
+}
+
+impl PartialEq for Apple {
+    fn eq(&self, other: &Self) -> bool {
+        self.quantity == other.quantity
+    }
+}
+
+impl PartialOrd for Apple {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.quantity.partial_cmp(&other.quantity)
+    }
+}
+
+#[test]
+fn test_compare() {
+    let apple1 = Apple { quantity: 10 };
+    let apple2 = Apple { quantity: 20 };
+
+    println!("apple1 == apple2 {}", apple1 == apple2);
+    println!("apple1 > apple2 {}", apple1 > apple2);
+    println!("apple1 < apple2 {}", apple1 < apple2);
+}
+
+#[test]
+fn test_string_manipulation() {
+    let s = String::from("Eko Kurniawan Khannedy");
+
+    println!("{}", s.to_uppercase());
+    println!("{}", s.to_lowercase());
+    println!("{}", s.len());
+    println!("{}", s.replace("Eko", "Budi"));
+    println!("{}", s.contains("Khannedy"));
+    println!("{}", s.starts_with("Eko"));
+    println!("{}", s.ends_with("Khannedy"));
+    println!("{}", s.trim());
+    println!("{}", &s[0..3]);
+    println!("{:?}", s.get(0..3));
+}
+
+struct Category {
+    id: String,
+    name: String,
+}
+
+use std::fmt::{Debug, Formatter};
+
+impl Debug for Category{
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Category")
+            .field("id", &self.id)
+            .field("name", &self.name)
+            .finish()
+    }
+}
+
+#[test]
+fn test_format() {
+    let category = Category{
+        id: String::from("123"),
+        name: String::from("Sport"),
+    };
+
+    println!("{:?}", category);
+}
