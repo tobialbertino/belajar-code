@@ -1368,7 +1368,7 @@ fn test_hash_set() {
 
 #[test]
 fn test_btree_set() {
-    let mut set: BTreeSet<  String> = BTreeSet  ::new();
+    let mut set: BTreeSet<String> = BTreeSet::new();
     set.insert(String::from("Tobi"));
     set.insert(String::from("Tobi"));
     set.insert(String::from("Albertino"));
