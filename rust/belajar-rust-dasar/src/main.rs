@@ -1107,6 +1107,7 @@ impl<T> GetValue<T> for Point<T> where T: PartialOrd {
 
 use ::core::ops::Add;
 use std::cmp::Ordering;
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, LinkedList, VecDeque};
 
 struct Apple {
     quantity: i32,
@@ -1190,7 +1191,7 @@ struct Category {
 
 use std::fmt::{Debug, Formatter};
 
-impl Debug for Category{
+impl Debug for Category {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("Category")
             .field("id", &self.id)
@@ -1201,10 +1202,181 @@ impl Debug for Category{
 
 #[test]
 fn test_format() {
-    let category = Category{
+    let category = Category {
         id: String::from("123"),
         name: String::from("Sport"),
     };
 
     println!("{:?}", category);
+}
+
+#[test]
+fn test_closure() {
+    let sum: fn(i32, i32) -> i32 = |value1: i32, value2: i32| -> i32 {
+        value1 + value2
+    };
+
+    let result = sum(10, 10);
+    println!("{}", result);
+}
+
+fn print_with_filter(value: String, filter: fn(String) -> String) {
+    let result = filter(value);
+    println!("{}", result);
+}
+
+#[test]
+fn test_closure_as_parameter() {
+    let filter = |value: String| -> String {
+        value.to_uppercase()
+    };
+    print_with_filter(String::from("Tobi"), filter);
+}
+
+fn to_uppercase(value: String) -> String {
+    value.to_uppercase()
+}
+
+#[test]
+fn test_function_as_closure() {
+    print_with_filter(String::from("Tobi"), to_uppercase);
+}
+
+#[test]
+fn test_closure_scope() {
+    let mut counter = 0;
+
+    let mut increment = || {
+        counter += 1;
+        println!("increment");
+    };
+
+    increment();
+    increment();
+    increment();
+
+    println!("counter {}", counter);
+}
+
+struct Counter {
+    counter: i32,
+}
+
+impl Counter {
+    fn increment(&mut self) {
+        self.counter += 1;
+        println!("increment");
+    }
+}
+
+#[test]
+fn test_counter() {
+    let mut counter = Counter { counter: 0 };
+    counter.increment();
+    counter.increment();
+    counter.increment();
+
+    println!("counter {}", counter.counter);
+}
+
+#[test]
+fn test_vector() {
+    let mut names: Vec<String> = Vec::<String>::new();
+    names.push(String::from("M"));
+    names.push(String::from("Khoiru"));
+    names.push(String::from("Tobi"));
+
+    for name in &names {
+        println!("{}", name);
+    }
+
+    println!("{:?}", names);
+}
+
+#[test]
+fn test_vector_deque() {
+    let mut names: VecDeque<String> = VecDeque::new();
+    names.push_back(String::from("M"));
+    names.push_back(String::from("Khoiru"));
+    names.push_front(String::from("Tobi"));
+
+    for name in &names {
+        println!("{}", name)
+    }
+}
+
+#[test]
+fn test_linked_list() {
+    let mut names: LinkedList<String> = LinkedList::new();
+    names.push_back(String::from("M"));
+    names.push_back(String::from("Khoiru"));
+    names.push_front(String::from("Tobi"));
+
+    for name in &names {
+        println!("{}", name)
+    }
+}
+
+#[test]
+fn test_hash_map() {
+    let mut map: HashMap<String, String> = HashMap::new();
+    map.insert(String::from("name"), String::from("Tobi"));
+    map.insert(String::from("age"), String::from("20"));
+    map.insert(String::from("country"), String::from("Indonesia"));
+    map.insert(String::from("xountry"), String::from("Indonesia"));
+    map.insert(String::from("zountry"), String::from("Indonesia"));
+
+    let name = map.get("name");
+    let age = map.get("age");
+
+    println!("Name {}", name.unwrap());
+    println!("Age {}", age.unwrap());
+
+    for entry in map {
+        println!("{}: {}", entry.0, entry.1);
+    }
+}
+
+#[test]
+fn test_btree_map() {
+    let mut map: BTreeMap<String, String> = BTreeMap::new();
+    map.insert(String::from("name"), String::from("Tobi"));
+    map.insert(String::from("age"), String::from("20"));
+    map.insert(String::from("country"), String::from("Indonesia"));
+    map.insert(String::from("xountry"), String::from("Indonesia"));
+    map.insert(String::from("zountry"), String::from("Indonesia"));
+
+    for entry in map {
+        println!("{}: {}", entry.0, entry.1);
+    }
+}
+
+#[test]
+fn test_hash_set() {
+    let mut set: HashSet<String> = HashSet::new();
+    set.insert(String::from("Tobi"));
+    set.insert(String::from("Tobi"));
+    set.insert(String::from("Albertino"));
+    set.insert(String::from("Albertino"));
+    set.insert(String::from("Khoiru"));
+    set.insert(String::from("Khoiru"));
+
+    for value in set {
+        println!("{}", value);
+    }
+}
+
+#[test]
+fn test_btree_set() {
+    let mut set: BTreeSet<  String> = BTreeSet  ::new();
+    set.insert(String::from("Tobi"));
+    set.insert(String::from("Tobi"));
+    set.insert(String::from("Albertino"));
+    set.insert(String::from("Albertino"));
+    set.insert(String::from("Khoiru"));
+    set.insert(String::from("Khoiru"));
+
+    for value in set {
+        println!("{}", value);
+    }
 }
