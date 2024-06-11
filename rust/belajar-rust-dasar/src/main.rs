@@ -1380,3 +1380,35 @@ fn test_btree_set() {
         println!("{}", value);
     }
 }
+
+#[test]
+fn test_iterator() {
+    let array: [i32; 5] = [1, 2, 3, 4, 5];
+    let mut iterator = array.iter();
+
+    while let Some(value) = iterator.next() {
+        println!("{}", value);
+    }
+
+    for value in iterator {
+        println!("{}", value);
+    }
+}
+
+#[test]
+fn test_iterator_method() {
+    let vector: Vec<i32> = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    println!("{:?}", vector);
+
+    let sum: i32 = vector.iter().sum();
+    println!("sum {}", sum);
+
+    let count = vector.iter().count();
+    println!("count {}", count);
+
+    let doubled: Vec<i32> = vector.iter().map(|x| -> i32 { x * 2 }).collect();
+    println!("doubled {:?}", doubled);
+
+    let odd: Vec<&i32> = vector.iter().filter(|x| { *x % 2 != 0 }).collect();
+    println!("odd {:?}", odd);
+}
