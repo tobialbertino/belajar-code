@@ -1108,6 +1108,7 @@ impl<T> GetValue<T> for Point<T> where T: PartialOrd {
 }
 
 use ::core::ops::Add;
+use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, LinkedList, VecDeque};
 
@@ -1749,4 +1750,88 @@ fn test_multiple_owner() {
     // let apple = ProductCategory::Of("Apple".to_string(), Box::new(ProductCategory::End));
     // let laptop = ProductCategory::Of("Laptop".to_string(), Box::new(apple));
     // let phone = ProductCategory::Of("SmartPhone".to_string(), Box::new(apple));
+}
+
+#[derive(Debug)]
+struct Seller {
+    name: RefCell<String>,
+    active: RefCell<bool>,
+}
+
+#[test]
+fn test_ref_cell() {
+    let seller = Seller {
+        name: RefCell::new("Tobi".to_string()),
+        active: RefCell::new(true),
+    };
+
+    {
+        let mut result = seller.name.borrow_mut();
+        *result = "Budi".to_string();
+    }
+
+    println!("{:?}", seller);
+}
+
+static APPLICATION: &str = "My Application";
+
+#[test]
+fn test_static() {
+    println!("{}", APPLICATION);
+}
+
+static mut COUNTER: u32 = 0;
+
+unsafe fn increment() {
+    COUNTER += 1;
+}
+
+#[test]
+fn test_unsafe() {
+    unsafe {
+        increment();
+        COUNTER += 1;
+        println!("{}", COUNTER);
+    }
+}
+
+macro_rules! hi {
+    () => {
+        println!("Hi Macro!")
+    };
+
+    ($name: expr) => {
+        println!("Hi {}!", $name);
+    }
+}
+
+#[test]
+fn test_macro() {
+    hi!();
+    hi!("Tobi");
+    hi! {
+        "Tobi"
+    }
+
+    let name = "Tobi";
+    hi!(name);
+}
+
+macro_rules! iterate {
+    ($array: expr) => {
+        for i in $array {
+            println!("{}", i);
+        }
+    };
+     ($($item: expr), *) => {
+         $(
+            println!("{}", $item);
+         )*
+     }
+}
+
+#[test]
+fn test_macro_iterate() {
+    iterate!([1,2,3,4,5,6,7,8,9,10]);
+    iterate!(1,2,3,4,5,6,7,8,9,10);
 }
