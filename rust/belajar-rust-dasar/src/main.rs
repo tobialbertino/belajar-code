@@ -5,6 +5,8 @@ mod model;
 
 use first::say_hello;
 use second::say_hello as say_hello_second;
+use std::ops::Deref;
+use std::rc::Rc;
 
 
 #[test]
@@ -1411,4 +1413,340 @@ fn test_iterator_method() {
 
     let odd: Vec<&i32> = vector.iter().filter(|x| { *x % 2 != 0 }).collect();
     println!("odd {:?}", odd);
+}
+
+fn connect_database(host: Option<String>) {
+    match host {
+        None => {
+            panic!("No database host provided");
+        }
+        Some(host) => {
+            println!("Connecting to database {}", host);
+        }
+    }
+}
+
+#[test]
+fn test_panic() {
+    // connect_database(Some(String::from("localhost")));
+    connect_database(None);
+}
+
+fn connect_cache(host: Option<String>) -> Result<String, String> {
+    match host {
+        None => {
+            Err("No cache host provided".to_string())
+        }
+        Some(host) => {
+            Ok(host)
+        }
+    }
+}
+
+fn connect_email(host: Option<String>) -> Result<String, String> {
+    match host {
+        None => {
+            Err("No email host provided".to_string())
+        }
+        Some(host) => {
+            Ok(host)
+        }
+    }
+}
+
+fn connect_application(host: Option<String>) -> Result<String, String> {
+    // manual
+    // let connect_cache = connect_cache(host.clone());
+    // match connect_cache {
+    //     Ok(_) => {}
+    //     Err(err) => {
+    //         return Err(err);
+    //     }
+    // }
+    //
+    // let connect_email = connect_email(host.clone());
+    // match connect_email {
+    //     Ok(_) => {}
+    //     Err(err) => {
+    //         return Err(err);
+    //     }
+    // }
+
+    connect_cache(host.clone())?;
+    connect_email(host.clone())?;
+    Ok("Connected to app".to_string())
+}
+
+#[test]
+fn test_application_error() {
+    // let result =  connect_application(Some("localhost".to_string()));
+    let result = connect_application(None);
+    match result {
+        Ok(host) => { println!("Success connect with mesage: {}", host) }
+        Err(err) => { println!("Err with message: {}", err) }
+    }
+}
+
+#[test]
+fn test_recoverable_error() {
+    // let cache = connect_cache(Some("localhost".to_string()));
+    let cache = connect_cache(None);
+
+    match cache {
+        Ok(host) => {
+            println!("Success connect to host: {}", host);
+        }
+        Err(err) => {
+            println!("Err with message: {}", err);
+        }
+    }
+}
+
+#[test]
+fn test_dangling_reference() {
+    let r: &i32;
+    {
+        let _x: i32 = 5;
+        // r = &x; // error
+    }
+    r = &10;
+
+    println!("{}", r);
+}
+
+fn longest<'a>(value1: &'a str, value2: &'a str) -> &'a str {
+    if value1.len() > value2.len() {
+        value1
+    } else {
+        value2
+    }
+}
+
+#[test]
+fn test_lifetime_annotation() {
+    let value1 = "Tobi";
+    let value2 = "Albertino";
+    let result = longest(value1, value2);
+
+    println!("{}", result);
+}
+
+#[test]
+fn test_lifetime_annotation_dangling_reference() {
+    let string1 = "Tobi".to_string();
+    let string2 = "Albertino".to_string();
+    let result;
+    {
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    println!("{}", result)
+}
+
+struct Student<'a, 'b> {
+    name: &'a str,
+    last_name: &'b str,
+}
+
+impl<'a, 'b> Student<'a, 'b> {
+    fn longest_name(&self, student: &Student<'a, 'b>) -> &'a str {
+        if self.name.len() > student.name.len() {
+            return self.name;
+        }
+        return student.name;
+    }
+}
+
+fn longest_student_name<'a, 'b>(student1: &Student<'a, 'b>, student2: &Student<'a, 'b>) -> &'a str {
+    if student1.name.len() > student2.name.len() {
+        return student1.name;
+    }
+    return student2.name;
+}
+
+#[test]
+fn test_student() {
+    let student = Student {
+        name: "Tobiii",
+        last_name: "Albertino",
+    };
+
+    println!("{}", student.name);
+    println!("{}", student.last_name);
+    let student2 = Student {
+        name: "Budi",
+        last_name: "Anduk",
+    };
+
+    let result = longest_student_name(&student, &student2);
+    println!("longest student name: {}", result);
+
+    let result = student.longest_name(&student2);
+    println!("longest student name with method: {}", result);
+}
+
+struct Teacher<'a, ID> where ID: Ord {
+    id: ID,
+    name: &'a str,
+}
+
+#[test]
+fn test_lifetime_annotation_generic() {
+    let teacher: Teacher<i32> = Teacher {
+        id: 10,
+        name: "Tobi",
+    };
+
+    println!("{}", teacher.id);
+    println!("{}", teacher.name);
+}
+
+#[derive(Debug, PartialEq, PartialOrd)]
+struct Company {
+    name: String,
+    location: String,
+    website: String,
+}
+
+#[test]
+fn test_attribute_derive() {
+    let company = Company {
+        name: "Tobi Inc".to_string(),
+        location: "Indonesia".to_string(),
+        website: "www.tobs-inc.com".to_string(),
+    };
+
+    let company2 = Company {
+        name: "Tobi Inc".to_string(),
+        location: "Indonesia".to_string(),
+        website: "www.tobs-inc.com".to_string(),
+    };
+
+    println!("{:?}", company);
+
+    let result = company == company2;
+    println!("{}", result);
+
+    let result = company > company2;
+    println!("{}", result);
+}
+
+#[test]
+fn test_box() {
+    let value: Box<i32> = Box::new(10);
+    println!("{}", value);
+    display_number(*value);
+    display_number_reference(&value);
+}
+
+fn display_number(value: i32) {
+    println!("{}", value)
+}
+
+fn display_number_reference(value: &i32) {
+    println!("{}", value)
+}
+
+#[derive(Debug)]
+enum ProductCategory {
+    Of(String, Box<ProductCategory>),
+    End,
+}
+
+#[test]
+fn test_box_enum() {
+    let category_asus = Box::new(ProductCategory::Of(
+        "Asus".to_string(),
+        Box::new(ProductCategory::End),
+    ));
+    println!("{:?}", category_asus);
+
+    let category = ProductCategory::Of(
+        "Laptop".to_string(),
+        category_asus,
+    );
+    println!("{:?}", category);
+    print_category(&category);
+}
+
+fn print_category(category: &ProductCategory) {
+    println!("{:?}", category);
+}
+
+#[test]
+fn test_dereference() {
+    let value1 = Box::new(10);
+    let value2 = Box::new(20);
+
+    let result: i32 = *value1 * *value2;
+    println!("{}", result);
+}
+
+struct MyValue<T> {
+    value: T,
+}
+
+impl<T> Deref for MyValue<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.value
+    }
+}
+
+#[test]
+fn test_dereference_struct() {
+    let value = MyValue { value: 10 };
+    let real_value = *value;
+    println!("{}", real_value);
+}
+
+fn say_hello_reference(name: &String) {
+    println!("Hello {}", name);
+}
+
+#[test]
+fn test_deref_reference() {
+    let name = MyValue { value: "Tobi".to_string() };
+    say_hello_reference(&name);
+}
+
+struct Book {
+    title: String,
+}
+
+impl Drop for Book {
+    fn drop(&mut self) {
+        println!("Dropping book: {}", self.title)
+    }
+}
+
+#[test]
+fn test_drop() {
+    let book = Book { title: "rust programming".to_string() };
+    println!("{}", book.title);
+}
+
+enum Brand {
+    Of(String, Rc<Brand>),
+    End,
+}
+
+#[test]
+fn test_multiple_owner() {
+    let apple: Rc<Brand> = Rc::new(Brand::Of("apple".to_string(), Rc::new(Brand::End)));
+    println!("Apple reference count: {}", Rc::strong_count(&apple));
+
+    let laptop: Brand = Brand::Of("laptop".to_string(), Rc::clone(&apple));
+    println!("Apple reference count: {}", Rc::strong_count(&apple));
+
+    {
+        let phone: Brand = Brand::Of("SmartPhone".to_string(), Rc::clone(&apple));
+        println!("Apple reference count: {}", Rc::strong_count(&apple));
+    }
+
+    println!("Apple reference count: {}", Rc::strong_count(&apple));
+
+    // let apple = ProductCategory::Of("Apple".to_string(), Box::new(ProductCategory::End));
+    // let laptop = ProductCategory::Of("Laptop".to_string(), Box::new(apple));
+    // let phone = ProductCategory::Of("SmartPhone".to_string(), Box::new(apple));
 }
