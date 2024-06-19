@@ -1,9 +1,15 @@
 [package]
 name = "say-hello-tobialbertino"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 description = "This is say hello library"
 license = "Apache-2.0"
 authors = ["Tobi Albertino"]
+
+[features]
+hello = []
+bye = []
+all = ["hello", "bye"]
+default = ["hello"]
 
 [dependencies]
