@@ -12,4 +12,14 @@ fn main() {
 
     let response = say_goodbye_to_everyone();
     println!("{}", response);
+
+    // error, only dev dep or unit test
+    // let id = uuid::Uuid::new_v4().to_string();
+    // println!("{}", id);
+}
+
+#[test]
+fn test_uuid() {
+    let id = uuid::Uuid::new_v4().to_string();
+    println!("{}", id);
 }
