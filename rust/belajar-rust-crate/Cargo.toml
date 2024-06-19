@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-say-hello-tobialbertino = "0.1.0"
+say-hello-tobialbertino = "=0.2.0"
