@@ -11,6 +11,6 @@ dependencies = [
 
 [[package]]
 name = "say-hello-tobialbertino"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c1ed4952344c019425c64bf8be5cf8269e7fad824643148f4542e5c60431b421"
+checksum = "4fdc14027c238373e1b4dfc91bee6fd5e04cae67684b3581c189411694d39b38"
