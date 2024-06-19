@@ -6,9 +6,15 @@ version = 3
 name = "belajar-rust-crate"
 version = "0.1.0"
 dependencies = [
+ "bye",
+ "hello",
  "say-hello-tobialbertino",
  "uuid",
 ]
+
+[[package]]
+name = "bye"
+version = "0.1.0"
 
 [[package]]
 name = "cfg-if"
@@ -26,6 +32,10 @@ dependencies = [
  "libc",
  "wasi",
 ]
+
+[[package]]
+name = "hello"
+version = "0.1.0"
 
 [[package]]
 name = "libc"

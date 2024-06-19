@@ -16,6 +16,9 @@ fn main() {
     // error, only dev dep or unit test
     // let id = uuid::Uuid::new_v4().to_string();
     // println!("{}", id);
+
+    hello::say_hello();
+    bye::say_bye();
 }
 
 #[test]
