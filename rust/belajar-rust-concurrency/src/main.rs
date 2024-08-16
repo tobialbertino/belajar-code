@@ -213,4 +213,70 @@ mod tests {
         let _ = handle2.join();
         let _ = handle3.join();
     }
+
+    static mut COUNTER: i32 = 0;
+    #[test]
+    fn test_race_condition() {
+        let mut handles = vec![];
+        for _ in 0..10 {
+            let handle = thread::spawn(|| unsafe {
+                for _ in 0..1_000_000 {
+                    COUNTER += 1;
+                }
+            });
+            handles.push(handle);
+        }
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+
+        println!("Counter: {}", unsafe { COUNTER });
+    }
+
+    #[test]
+    fn test_atomic() {
+        use std::sync::atomic::{AtomicI32, Ordering};
+        static COUNTER: AtomicI32 = AtomicI32::new(0);
+
+        let mut handles = vec![];
+        for _ in 0..10 {
+            let handle = thread::spawn(|| {
+                for _ in 0..1_000_000 {
+                    COUNTER.fetch_add(1, Ordering::Relaxed);
+                }
+            });
+            handles.push(handle);
+        }
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+
+        println!("Counter: {}", COUNTER.load(Ordering::Relaxed));
+    }
+
+    #[test]
+    fn test_atomic_reference() {
+        use std::sync::atomic::{AtomicI32, Ordering};
+        use std::sync::Arc;
+        let counter: Arc<AtomicI32> = Arc::new(AtomicI32::new(0));
+
+        let mut handles = vec![];
+        for _ in 0..10 {
+            let counter_clone = Arc::clone(&counter);
+            let handle = thread::spawn(move || {
+                for _ in 0..1_000_000 {
+                    counter_clone.fetch_add(1, Ordering::Relaxed);
+                }
+            });
+            handles.push(handle);
+        }
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+
+        println!("Counter: {}", counter.load(Ordering::Relaxed));
+    }
 }
