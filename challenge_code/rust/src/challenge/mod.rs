@@ -21,4 +21,5 @@
 // pub mod c25_double_char;
 // pub mod c26_update_light;
 // pub mod c27_set_alarm;
-pub mod c28_bonus_time;
+// pub mod c28_bonus_time;
+pub mod c29_remove_every_element;
