@@ -1,4 +1,7 @@
-use std::thread;
+use std::{
+    sync::{Arc, Barrier, Once},
+    thread,
+};
 
 fn main() {
     let current_thread = thread::current();
@@ -39,8 +42,12 @@ mod tests {
 
         let result = handle.join();
         match result {
-            Ok(counter) => { println!("Total counter: {}", counter) }
-            Err(error) => { println!("Error: {:?}", error) }
+            Ok(counter) => {
+                println!("Total counter: {}", counter)
+            }
+            Err(error) => {
+                println!("Error: {:?}", error)
+            }
         }
 
         println!("Application Finish");
@@ -53,8 +60,12 @@ mod tests {
 
         for i in 0..=5 {
             match current.name() {
-                None => { println!("{:?} : Counter: {}", current.id(), i); }
-                Some(name) => { println!("{:?} : Counter: {}", name, i); }
+                None => {
+                    println!("{:?} : Counter: {}", current.id(), i);
+                }
+                Some(name) => {
+                    println!("{:?} : Counter: {}", name, i);
+                }
             }
             thread::sleep(Duration::from_secs(1));
             counter += 1;
@@ -81,12 +92,20 @@ mod tests {
         let result2 = handle2.join();
 
         match result1 {
-            Ok(counter) => { println!("total counter 1: {}", counter) }
-            Err(error) => { println!("Error: {:?}", error) }
+            Ok(counter) => {
+                println!("total counter 1: {}", counter)
+            }
+            Err(error) => {
+                println!("Error: {:?}", error)
+            }
         }
         match result2 {
-            Ok(counter) => { println!("total counter 2: {}", counter) }
-            Err(error) => { println!("Error: {:?}", error) }
+            Ok(counter) => {
+                println!("total counter 2: {}", counter)
+            }
+            Err(error) => {
+                println!("Error: {:?}", error)
+            }
         }
 
         println!("Application Finish");
@@ -113,7 +132,9 @@ mod tests {
     fn test_thread_factory() {
         let factory = thread::Builder::new().name("My Thread".to_string());
 
-        let handle = factory.spawn(calculate).expect("Failed to create new thread");
+        let handle = factory
+            .spawn(calculate)
+            .expect("Failed to create new thread");
         let total = handle.join().unwrap();
 
         println!("Total counter: {}", total);
@@ -149,14 +170,12 @@ mod tests {
             sender.send("Exit".to_string())
         });
 
-        let handle2 = thread::spawn(move || {
-            loop {
-                let message = receiver.recv().unwrap();
-                if message == "Exit" {
-                    break;
-                }
-                println!("{}", message);
+        let handle2 = thread::spawn(move || loop {
+            let message = receiver.recv().unwrap();
+            if message == "Exit" {
+                break;
             }
+            println!("{}", message);
         });
 
         let _ = handle1.join();
@@ -331,18 +350,64 @@ mod tests {
             println!("Hello: {}", name);
         })
     }
-    
+
     #[test]
     fn test_thread_panic() {
-        let handle = thread::spawn(|| {
-            panic!("oops!, something went wrong")
-        });
-        
+        let handle = thread::spawn(|| panic!("oops!, something went wrong"));
+
         match handle.join() {
             Ok(_) => println!("Thread finish"),
             Err(_) => println!("Thread panic"),
         }
 
         println!("App Finish")
+    }
+}
+
+#[test]
+fn test_barriwr() {
+    let barrier = Arc::new(Barrier::new(10));
+    let mut handles = vec![];
+    for i in 0..10 {
+        let barrier_clone = Arc::clone(&barrier);
+        let handle = thread::spawn(move || {
+            println!("Before wait-{}", i);
+            barrier_clone.wait();
+            println!("After wait-{} - start", i);
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+}
+
+static mut TOTAL_COUNTER: i32 = 0;
+static mut TOTAL_INIT: Once = Once::new();
+
+fn get_total() -> i32 {
+    unsafe {
+        TOTAL_INIT.call_once(|| {
+            println!("call once");
+            TOTAL_COUNTER += 1;
+        });
+        return TOTAL_COUNTER;
+    }
+}
+
+#[test]
+fn test_once() {
+    let mut handles = vec![];
+    for _ in 0..10 {
+        let handle = thread::spawn(move || {
+            let total = get_total();
+            println!("Total: {}", total);
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
     }
 }
