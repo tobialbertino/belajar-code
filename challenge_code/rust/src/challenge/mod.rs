@@ -22,4 +22,5 @@
 // pub mod c26_update_light;
 // pub mod c27_set_alarm;
 // pub mod c28_bonus_time;
-pub mod c29_remove_every_element;
+// pub mod c29_remove_every_element;
+pub mod c30_will_there_enough_space;
