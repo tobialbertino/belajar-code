@@ -1,7 +1,4 @@
-use std::{
-    sync::{Arc, Barrier, Once},
-    thread,
-};
+use std::thread;
 
 fn main() {
     let current_thread = thread::current();
@@ -10,6 +7,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
+    use std::sync::{Arc, Barrier, Once};
     use std::thread;
     use std::thread::JoinHandle;
     use std::time::Duration;
@@ -362,52 +360,66 @@ mod tests {
 
         println!("App Finish")
     }
-}
 
-#[test]
-fn test_barriwr() {
-    let barrier = Arc::new(Barrier::new(10));
-    let mut handles = vec![];
-    for i in 0..10 {
-        let barrier_clone = Arc::clone(&barrier);
-        let handle = thread::spawn(move || {
-            println!("Before wait-{}", i);
-            barrier_clone.wait();
-            println!("After wait-{} - start", i);
-        });
-        handles.push(handle);
+    #[test]
+    fn test_barriwr() {
+        let barrier = Arc::new(Barrier::new(10));
+        let mut handles = vec![];
+        for i in 0..10 {
+            let barrier_clone = Arc::clone(&barrier);
+            let handle = thread::spawn(move || {
+                println!("Before wait-{}", i);
+                barrier_clone.wait();
+                println!("After wait-{} - start", i);
+            });
+            handles.push(handle);
+        }
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
     }
 
-    for handle in handles {
-        handle.join().unwrap();
-    }
-}
+    static mut TOTAL_COUNTER: i32 = 0;
+    static mut TOTAL_INIT: Once = Once::new();
 
-static mut TOTAL_COUNTER: i32 = 0;
-static mut TOTAL_INIT: Once = Once::new();
-
-fn get_total() -> i32 {
-    unsafe {
-        TOTAL_INIT.call_once(|| {
-            println!("call once");
-            TOTAL_COUNTER += 1;
-        });
-        return TOTAL_COUNTER;
-    }
-}
-
-#[test]
-fn test_once() {
-    let mut handles = vec![];
-    for _ in 0..10 {
-        let handle = thread::spawn(move || {
-            let total = get_total();
-            println!("Total: {}", total);
-        });
-        handles.push(handle);
+    fn get_total() -> i32 {
+        unsafe {
+            TOTAL_INIT.call_once(|| {
+                println!("call once");
+                TOTAL_COUNTER += 1;
+            });
+            return TOTAL_COUNTER;
+        }
     }
 
-    for handle in handles {
-        handle.join().unwrap();
+    #[test]
+    fn test_once() {
+        let mut handles = vec![];
+        for _ in 0..10 {
+            let handle = thread::spawn(move || {
+                let total = get_total();
+                println!("Total: {}", total);
+            });
+            handles.push(handle);
+        }
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+    }
+
+    async fn get_async_data() -> String {
+        thread::sleep(Duration::from_secs(2));
+        println!("Hello from async");
+        return "Hello from async".to_string();
+    }
+
+    #[tokio::test]
+    async fn test_async() {
+        let fucntion = get_async_data();
+        println!("Hello from main");
+        let data = fucntion.await;
+        println!("Data: {}", data);
     }
 }
