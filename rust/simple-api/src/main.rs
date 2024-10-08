@@ -1,21 +1,23 @@
-pub mod routes;
+mod constants;
+mod simple;
 
-use axum::routing::post;
-use axum::{routing::get, Router};
+use axum::Router;
 
 #[tokio::main]
 async fn main() {
     // build our application with a route
     let app = Router::new()
-        .route("/", get(routes::handler))
-        .route("/test", get(routes::test_handler))
-        .route("/test", post(routes::post_handler));
+    .merge(simple::router::register_routes());
 
     // Bind the server to the configured port.
-    let listener = match tokio::net::TcpListener::bind(format!("0.0.0.0:{}", 3000)).await {
-        Ok(listener) => listener,
+    let listener = match tokio::net::TcpListener::bind(format!("0.0.0.0:{}", constants::PORT)).await
+    {
+        Ok(listener) => {
+            println!("Listening on port {}", constants::PORT);
+            listener
+        }
         Err(err) => {
-            eprintln!("Failed to bind to port {}: {:?}", 3000, err);
+            eprintln!("Failed to bind to port {}: {:?}", constants::PORT, err);
             return;
         }
     };
