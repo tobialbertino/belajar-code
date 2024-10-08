@@ -7,8 +7,8 @@ use super::handler;
 
 pub fn register_routes() -> Router {
     Router::new()
-        .route("/", get(handler::handler))
-        .route("/test", get(handler::test_handler))
-        .route("/test", post(handler::post_handler))
-        .route("/add", post(handler::add_handler))
+        .route("/simple", get(handler::handler))
+        .route("/simple/test", get(handler::test_handler))
+        .route("/simple/test", post(handler::post_handler))
+        .route("/simple/add", post(handler::add_handler))
 }
