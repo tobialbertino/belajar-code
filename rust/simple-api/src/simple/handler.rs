@@ -3,7 +3,7 @@ use axum::response::Html;
 use axum::response::Json as AxumJson;
 use serde_json::json;
 
-use super::model::model;
+use super::model;
 
 pub async fn handler() -> Html<&'static str> {
     Html("<h1>Hello, World!</h1>")
