@@ -3,9 +3,15 @@ mod simple;
 mod checker;
 
 use axum::Router;
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
 async fn main() {
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::INFO)  // Set log level to INFO
+        .with_target(false)  // Disable target field (optional for simplicity)
+        .init();
+
     // build our application with a route
     let app = Router::new()
     .merge(simple::router::register_routes())

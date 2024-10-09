@@ -4,9 +4,11 @@ use axum::{
 };
 
 use super::handler;
+use tower_http::trace::TraceLayer;
 
 pub fn register_routes() -> Router {
     Router::new()
         .route("/checker/test", get(handler::test_handler))
+        .layer(TraceLayer::new_for_http())
     
 }
