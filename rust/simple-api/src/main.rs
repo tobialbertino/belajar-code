@@ -1,5 +1,6 @@
 mod constants;
 mod simple;
+mod checker;
 
 use axum::Router;
 
@@ -7,7 +8,8 @@ use axum::Router;
 async fn main() {
     // build our application with a route
     let app = Router::new()
-    .merge(simple::router::register_routes());
+    .merge(simple::router::register_routes())
+    .merge(checker::router::register_routes());
 
     // Bind the server to the configured port.
     let listener = match tokio::net::TcpListener::bind(format!("0.0.0.0:{}", constants::PORT)).await
