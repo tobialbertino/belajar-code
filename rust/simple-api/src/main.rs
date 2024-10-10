@@ -3,21 +3,14 @@ mod constants;
 mod simple;
 
 use axum::Router;
-use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use tracing_subscriber;
 
 #[tokio::main]
 async fn main() {
     // Initialize the logger with log level control, which prints logs to the terminal
-    tracing_subscriber::registry()
-        .with(
-            tracing_subscriber::fmt::layer()
-                .with_target(false) // Optionally disable target field in logs
-                .with_level(true), // Include log levels in output
-        )
-        .with(
-            tracing_subscriber::EnvFilter::from_default_env(), // Use `RUST_LOG` to set log level
-        )
-        .init();
+    tracing_subscriber::fmt()
+    .with_max_level(tracing::Level::DEBUG)
+    .init();
 
     // build our application with a route
     let app = Router::new()
