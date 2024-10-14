@@ -23,4 +23,5 @@
 // pub mod c27_set_alarm;
 // pub mod c28_bonus_time;
 // pub mod c29_remove_every_element;
-pub mod c30_will_there_enough_space;
+// pub mod c30_will_there_enough_space;
+pub mod c31_third_angle_of_a_triangle;
