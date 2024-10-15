@@ -1,0 +1,17 @@
+version: "3.8"
+
+volumes:
+  mysql-1:
+    name: mysql-1
+
+services:
+  mysql:
+    container_name: mysql_db
+    image: mysql:8.4
+    restart: always
+    ports:
+     - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+    volumes:
+     - mysql-1:/var/lib/mysql

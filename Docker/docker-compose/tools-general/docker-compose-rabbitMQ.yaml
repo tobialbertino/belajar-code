@@ -1,0 +1,19 @@
+version: "3.8"
+
+volumes:
+  rabbitmq-1:
+    name: rabbitmq-1
+
+services:
+  # this is example comment
+  rabbitMQ:
+    container_name: rabbitmqLocal
+    image: rabbitmq:3.12.9-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - "rabbitmq-1:/var/lib/rabbitmq"
