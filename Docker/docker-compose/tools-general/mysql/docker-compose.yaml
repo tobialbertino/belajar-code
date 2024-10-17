@@ -1,8 +1,8 @@
 version: "3.8"
 
 volumes:
-  mysql-1:
-    name: mysql-1
+  mysql-data:
+    name: mysql-data
 
 services:
   mysql:
@@ -14,4 +14,4 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=mysql
     volumes:
-     - mysql-1:/var/lib/mysql
+     - mysql-data:/var/lib/mysql

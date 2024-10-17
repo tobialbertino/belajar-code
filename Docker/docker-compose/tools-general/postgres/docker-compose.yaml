@@ -1,8 +1,8 @@
 version: "3.8"
 
 volumes:
-  postgres-1:
-    name: postgres-1
+  postgres-data:
+    name: postgres-data
 
 services:
   postgres:
@@ -14,4 +14,4 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
-     - postgres-1:/var/lib/postgresql/data
+     - postgres-data:/var/lib/postgresql/data

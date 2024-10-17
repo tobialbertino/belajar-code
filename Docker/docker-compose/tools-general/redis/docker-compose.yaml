@@ -12,4 +12,4 @@ services:
       - "6379:6379"  # Expose Redis on port 6379
     volumes:
       - redis-data:/data  # Persist Redis data to a volume
-    command: ["redis-server", "--appendonly", "yes"]  # Enable AOF persistence for durability
+    # command: ["redis-server", "--appendonly", "yes"]  # Enable AOF persistence for durability
