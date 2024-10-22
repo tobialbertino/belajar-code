@@ -10,15 +10,20 @@ func worker(id int, jobs <-chan int, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for j := range jobs {
 		fmt.Println("worker", id, "started  job", j)
-		time.Sleep(time.Second) // Simulate job processing time
+		a := 0
+		for i := 0; i < 100000000; i++ {
+			a += a + i
+		}
+		//time.Sleep(time.Second) // Simulate job processing time
 		fmt.Println("worker", id, "finished job", j)
 	}
 }
 
 func MainWorker() {
+	start := time.Now()
 
-	const numJobs = 5
-	const numWorker = 3
+	const numJobs = 10000
+	const numWorker = 16
 	wg := new(sync.WaitGroup)
 	jobs := make(chan int, numJobs)
 
@@ -37,4 +42,7 @@ func MainWorker() {
 
 	// Wait for all workers to finish
 	wg.Wait()
+
+	totalTime := time.Since(start)
+	println("Total timee seconds: ", totalTime.Seconds())
 }
