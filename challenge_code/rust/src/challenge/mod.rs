@@ -24,4 +24,6 @@
 // pub mod c28_bonus_time;
 // pub mod c29_remove_every_element;
 // pub mod c30_will_there_enough_space;
-pub mod c31_third_angle_of_a_triangle;
+// pub mod c31_third_angle_of_a_triangle;
+// pub mod c33_find_first_no_consecutive;
+pub mod c32_cockroach;
