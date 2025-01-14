@@ -2,17 +2,11 @@ volumes:
   rabbitmq-data:
     name: rabbitmq-data
 
-networks:
-  default:
-    driver: bridge
-
 services:
   rabbitMQ:
     container_name: rabbitmq_service
     # image: rabbitmq:4.0.2-management
     image: rabbitmq:3.12.14-management-alpine
-    networks:
-      default: {}
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -21,4 +15,3 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     volumes:
       - "rabbitmq-data:/var/lib/rabbitmq"
-
