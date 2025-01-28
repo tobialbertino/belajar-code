@@ -90,5 +90,3 @@ fn test_deserialize() {
     assert_eq!(app_config.db.host, "localhost");
     assert_eq!(app_config.db.port, 8080);
 }
-
-
