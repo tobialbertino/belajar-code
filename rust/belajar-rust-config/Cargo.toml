@@ -1,0 +1,8 @@
+[package]
+name = "belajar-rust-config"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+config = "0.15.6"
+serde = { version = "1.0.217", features = ["derive"] }

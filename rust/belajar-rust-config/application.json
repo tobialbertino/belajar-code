@@ -1,0 +1,7 @@
+{
+  "name": "My Application",
+  "db": {
+    "host": "localhost",
+    "port": 8080
+  }
+}
