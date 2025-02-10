@@ -1,0 +1,16 @@
+volumes:
+  mongodb-data:
+    name: mongodb-data
+
+services:
+  mongodb1:
+    image: mongo:8.0.4-noble
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test
+      - MONGO_INITDB_DATABASE=notification_db
+    volumes:
+      - "mongodb-data:/data/db"
