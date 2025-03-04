@@ -1,0 +1,17 @@
+services:
+  locust-master:
+    image: locustio/locustersion: '3'
+
+    command: -f /mnt/locustfile.py --master
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./mnt:/mnt
+
+  locust-worker:
+    image: locustio/locust
+    command: -f /mnt/locustfile.py --worker --master-host=locust-master
+    volumes:
+      - ./mnt:/mnt
+    depends_on:
+      - locust-master
