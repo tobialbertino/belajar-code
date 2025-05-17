@@ -7,6 +7,8 @@ name = "belajar-rust-template"
 version = "0.1.0"
 dependencies = [
  "handlebars",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

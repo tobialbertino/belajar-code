@@ -1,0 +1,11 @@
+{{> layout/header}}
+
+<h1>{{title}}</h1>
+<p>{{content}}</p>
+{{#if author}}
+    <p>{{author}}</p>
+{{else}}
+    <p>Anonymous</p>
+{{/if}}
+
+{{> layout/footer}}
